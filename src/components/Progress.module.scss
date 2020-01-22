@@ -1,0 +1,13 @@
+.element {
+	margin: 30px 0;
+
+	.title {
+		display: flex;
+		justify-content: space-between;
+	}
+
+	.progressbar {
+		background-color: #ddd;
+		height: 5px;
+	}
+}

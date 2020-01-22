@@ -1,13 +1,13 @@
-export const calcYear = () => {
-	const today = new Date();
+export const calcYear = time => {
+	const today = new Date(time);
 	const firstDate = new Date(new Date().getFullYear(), 0, 1);
 	const lastDate = new Date(new Date().getFullYear(), 11, 31);
 
 	return calcDiff(firstDate, today, lastDate);
 };
 
-export const calcQuarter = () => {
-	const today = new Date();
+export const calcQuarter = time => {
+	const today = new Date(time);
 	const firstDate = new Date(new Date().getFullYear(), 0, 1);
 
 	let endMonth = 0;
@@ -29,8 +29,8 @@ export const calcQuarter = () => {
 	return calcDiff(firstDate, today, lastDate);
 };
 
-export const calcMonth = () => {
-	const today = new Date();
+export const calcMonth = time => {
+	const today = new Date(time);
 	const firstDate = new Date(new Date().getFullYear(), 0, 1);
 	const lastDate = new Date(
 		new Date().getFullYear(),
@@ -41,8 +41,8 @@ export const calcMonth = () => {
 	return calcDiff(firstDate, today, lastDate);
 };
 
-export const calcWeek = () => {
-	const now = new Date();
+export const calcWeek = time => {
+	const now = new Date(time);
 	const firstDate = new Date(
 		new Date().setDate(
 			now.getDate() - now.getDay() + (now.getDay() === 0 ? -6 : 1)

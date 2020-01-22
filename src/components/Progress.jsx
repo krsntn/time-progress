@@ -1,17 +1,8 @@
-import React, { useState } from 'react';
-import css from '../App.module.scss';
+import React from 'react';
+import css from './Progress.module.scss';
 
-export default function Progress(props) {
-	const { title, calc, runInterval, showDecimal } = props;
-	const [percentage, setPercentage] = useState(
-		formatValue(showDecimal, calc())
-	);
-
-	if (runInterval) {
-		setTimeout(() => {
-			setPercentage(formatValue(showDecimal, calc()));
-		}, 1000);
-	}
+const Progress = props => {
+	const { title, percentage } = props;
 
 	return (
 		<div className={css.element}>
@@ -19,9 +10,9 @@ export default function Progress(props) {
 				<div>{title}</div>
 				<div>{percentage}%</div>
 			</div>
-			<div className="progress" style={{ backgroundColor: '#ddd' }}>
+			<div className={`${css.progressbar} progress`}>
 				<div
-					className="progress-bar bg-primary"
+					className="progress-bar bg-danger"
 					role="progressbar"
 					style={{
 						width: `${percentage}%`,
@@ -30,8 +21,6 @@ export default function Progress(props) {
 			</div>
 		</div>
 	);
-}
+};
 
-function formatValue(showDecimal, value) {
-	return showDecimal ? value.toFixed(4) : Math.floor(value);
-}
+export default React.memo(Progress);

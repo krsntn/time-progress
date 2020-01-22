@@ -3,7 +3,7 @@ import css from './App.module.scss';
 import { calcYear, calcQuarter, calcMonth, calcWeek, calcDay } from './js/calc';
 import Progress from './components/Progress';
 
-function App() {
+const App = () => {
 	const [now, setNow] = useState(new Date().toLocaleString());
 	const [yearPercent, setYearPercent] = useState(0);
 	const [quarterPercent, setQuarterPercent] = useState(0);
@@ -30,7 +30,7 @@ function App() {
 					<div className={css.bigTitle}>Progress</div>
 					<div className={css.bigDescription}>{now}</div>
 					<Progress title="Year" percentage={yearPercent}></Progress>
-					<Progress title="Quater" percentage={quarterPercent}></Progress>
+					<Progress title="Quarter" percentage={quarterPercent}></Progress>
 					<Progress title="Month" percentage={monthPercent}></Progress>
 					<Progress title="Week" percentage={weekPercent}></Progress>
 					<Progress title="Today" percentage={dayPercent}></Progress>
@@ -45,10 +45,10 @@ function App() {
 			</div>
 		</div>
 	);
-}
+};
 
-function formatValue(showDecimal, value) {
+const formatValue = (showDecimal, value) => {
 	return showDecimal ? value.toFixed(4) : Math.floor(value);
-}
+};
 
 export default App;

@@ -3,7 +3,7 @@ export const calcYear = time => {
 	const firstDate = new Date(new Date().getFullYear(), 0, 1);
 	const lastDate = new Date(new Date().getFullYear(), 11, 31);
 
-	return calcDiff(firstDate, today, lastDate);
+	return calcDayDiff(firstDate, today, lastDate);
 };
 
 export const calcQuarter = time => {
@@ -26,7 +26,7 @@ export const calcQuarter = time => {
 
 	const lastDate = new Date(new Date().getFullYear(), endMonth, endDate);
 
-	return calcDiff(firstDate, today, lastDate);
+	return calcDayDiff(firstDate, today, lastDate);
 };
 
 export const calcMonth = time => {
@@ -38,7 +38,7 @@ export const calcMonth = time => {
 		0
 	);
 
-	return calcDiff(firstDate, today, lastDate);
+	return calcDayDiff(firstDate, today, lastDate);
 };
 
 export const calcWeek = time => {
@@ -50,7 +50,7 @@ export const calcWeek = time => {
 	);
 	const lastDate = new Date(new Date().setDate(firstDate.getDate() + 6));
 
-	return calcDiff(firstDate, now, lastDate);
+	return calcDayDiff(firstDate, now, lastDate);
 };
 
 export const calcDay = () => {
@@ -60,18 +60,22 @@ export const calcDay = () => {
 	const end = new Date();
 	end.setHours(23, 59, 59, 999);
 
-	const diffTime = Math.abs(new Date() - start);
-	const diffTime2 = Math.abs(end - start);
+	const passedDay = Math.abs(new Date() - start);
+	const totalDay = Math.abs(end - start);
 
-	return (diffTime / diffTime2) * 100;
+	return (passedDay / totalDay) * 100;
 };
 
-function calcDiff(startDate, curDate, endDate) {
-	const diffTime = Math.abs(curDate - startDate);
-	const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+function calcDayDiff(start, cur, end) {
+	start = start.setHours(0, 0, 0, 0);
+	cur = cur.setHours(0, 0, 0, 0);
+	end = end.setHours(0, 0, 0, 0);
 
-	const diffTimeInYear = Math.abs(endDate - startDate);
-	const diffDaysInYear = Math.ceil(diffTimeInYear / (1000 * 60 * 60 * 24));
+	const diffTime = Math.abs(cur - start);
+	const passedDay = diffTime / (1000 * 60 * 60 * 24) + 1;
 
-	return (diffDays / diffDaysInYear) * 100;
+	const totalDiffInMilliseconds = Math.abs(end - start);
+	const totalDay = totalDiffInMilliseconds / (1000 * 60 * 60 * 24) + 1;
+
+	return (passedDay / totalDay) * 100;
 }

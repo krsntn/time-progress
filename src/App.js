@@ -29,6 +29,7 @@ const App = () => {
 				<div className={css.box}>
 					<div className={css.bigTitle}>Progress</div>
 					<div className={css.bigDescription}>{now}</div>
+
 					<Progress title="Year" percentage={yearPercent}></Progress>
 					<Progress title="Quarter" percentage={quarterPercent}></Progress>
 					<Progress title="Month" percentage={monthPercent}></Progress>

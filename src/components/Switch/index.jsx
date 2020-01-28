@@ -5,7 +5,7 @@ const Switch = props => {
   const { isChecked, toggleSwitch } = props;
 
   return (
-    <div className={`custom-control custom-switch ${css.switchDiv}`} size="3">
+    <div className={`stom-control custom-switch ${css.switchDiv}`}>
       <input
         type="checkbox"
         className="custom-control-input"
@@ -13,7 +13,10 @@ const Switch = props => {
         checked={isChecked}
         onChange={toggleSwitch}
       />
-      <label className="custom-control-label" htmlFor="customSwitch1"></label>
+      <label
+        className={`custom-control-label ${css.label}`}
+        htmlFor="customSwitch1"
+      ></label>
     </div>
   );
 };

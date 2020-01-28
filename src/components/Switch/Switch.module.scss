@@ -1,3 +1,12 @@
 .switchDiv {
-	margin: auto 0;
+  margin: auto 0;
+
+  .label {
+    &:before {
+      left: -1.75rem;
+    }
+    &:after {
+      left: calc(-1.75rem + 2px);
+    }
+  }
 }

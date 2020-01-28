@@ -1,32 +1,37 @@
 .App {
-	font-family: Arial, Helvetica, sans-serif;
-	color: #444;
-	padding: 50px 0;
-	min-height: 100vh;
-	background-image: url(https://source.unsplash.com/random);
-	background-size: cover;
-	background-repeat: no-repeat;
+  font-family: Arial, Helvetica, sans-serif;
+  color: #444;
+  padding: 50px 0;
+  min-height: 100vh;
+  background-image: url(https://source.unsplash.com/random);
+  background-size: cover;
+  background-repeat: no-repeat;
 
-	.box {
-		max-width: 400px;
-		margin: auto;
-		text-align: left;
-		background-color: #eee;
-		padding: 40px 70px;
+  .box {
+    max-width: 400px;
+    margin: auto;
+    text-align: left;
+    background-color: #eee;
+    padding: 40px 70px;
 
-		.bigTitle {
-			font-size: 28px;
-			font-weight: bold;
-		}
+    .titleDiv {
+      display: flex;
+      justify-content: space-between;
 
-		.bigDescription {
-			font-size: 16px;
-			font-weight: bold;
-		}
+      .bigTitle {
+        font-size: 28px;
+        font-weight: bold;
+      }
+    }
 
-		.footer {
-			margin-top: 10px;
-			font-size: 11px;
-		}
-	}
+    .bigDescription {
+      font-size: 16px;
+      font-weight: bold;
+    }
+
+    .footer {
+      margin-top: 10px;
+      font-size: 11px;
+    }
+  }
 }

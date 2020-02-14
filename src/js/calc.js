@@ -31,7 +31,7 @@ export const calcQuarter = time => {
 
 export const calcMonth = time => {
   const today = new Date(time);
-  const firstDate = new Date(new Date().getFullYear(), 0, 1);
+  const firstDate = new Date(today.getFullYear(), today.getMonth(), 1);
   const lastDate = new Date(
     new Date().getFullYear(),
     new Date().getMonth() + 1,

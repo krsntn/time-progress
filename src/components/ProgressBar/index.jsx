@@ -2,13 +2,17 @@ import React from 'react';
 import css from './Progress.module.scss';
 
 const Progress = props => {
-  const { title, percentage } = props;
+  const {
+    title,
+    data: { percentage, days },
+    showDiff,
+  } = props;
 
   return (
     <div className={css.element}>
       <div className={css.title}>
         <div>{title}</div>
-        <div>{percentage}%</div>
+        <div>{`${showDiff ? days + ' Left' : percentage + '%'}`}</div>
       </div>
       <div className={`${css.progressbar} progress`}>
         <div

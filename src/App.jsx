@@ -1,11 +1,11 @@
-import React, { useState, useEffect, useCallback, useMemo } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import css from './App.module.scss';
 import {
   calcYear,
   calcQuarter,
   calcMonth,
   calcWeek,
-  calcDay,
+  calcToday,
   calcValentine,
   calc1111,
   calcMonthWeekDay,
@@ -13,63 +13,40 @@ import {
 import Progress from './components/ProgressBar';
 import Switch from './components/Switch';
 
+const defaultValue = { percentage: 0, days: 0 };
+
 const App = () => {
   const [now, setNow] = useState(new Date().toLocaleString());
-  const [yearPercent, setYearPercent] = useState(0);
-  const [quarterPercent, setQuarterPercent] = useState(0);
-  const [monthPercent, setMonthPercent] = useState(0);
-  const [weekPercent, setWeekPercent] = useState(0);
-  const [dayPercent, setDayPercent] = useState(0);
-  const [valentinePercent, setValentinePercent] = useState(0);
-  const [singlesPercent, setSinglesPercent] = useState(0);
-  const [fathersDayPercent, setFathersDayPercent] = useState(0);
-  const [mothersDayPercent, setMothersDayPercent] = useState(0);
-  const [showDecimal, setShowDecimal] = useState(false);
+  const [yearData, setYearData] = useState(defaultValue);
+  const [quarterData, setQuarterData] = useState(defaultValue);
+  const [monthData, setMonthData] = useState(defaultValue);
+  const [weekData, setWeekData] = useState(defaultValue);
+  const [todayData, setTodayData] = useState(defaultValue);
+  const [valentineData, setValentineData] = useState(defaultValue);
+  const [singlesData, setSinglesData] = useState(defaultValue);
+  const [fathersDayData, setFathersDayData] = useState(defaultValue);
+  const [mothersDayData, setMothersDayData] = useState(defaultValue);
+  const [showDays, setShowDays] = useState(false);
 
   useEffect(() => {
     setInterval(() => {
       const newTime = new Date();
       setNow(newTime.toLocaleString());
-      setYearPercent(calcYear(newTime));
-      setQuarterPercent(calcQuarter(newTime));
-      setMonthPercent(calcMonth(newTime));
-      setWeekPercent(calcWeek(newTime));
-      setDayPercent(calcDay());
-      setValentinePercent(calcValentine(newTime));
-      setSinglesPercent(calc1111(newTime));
-      setFathersDayPercent(calcMonthWeekDay(newTime, 6, 3, 7));
-      setMothersDayPercent(calcMonthWeekDay(newTime, 5, 2, 7));
+      setYearData(calcYear(newTime));
+      setQuarterData(calcQuarter(newTime));
+      setMonthData(calcMonth(newTime));
+      setWeekData(calcWeek(newTime));
+      setTodayData(calcToday());
+      setValentineData(calcValentine(newTime));
+      setSinglesData(calc1111(newTime));
+      setFathersDayData(calcMonthWeekDay(newTime, 6, 3, 7));
+      setMothersDayData(calcMonthWeekDay(newTime, 5, 2, 7));
     }, 1000);
   }, []);
 
   const toggleSwitch = useCallback(() => {
-    setShowDecimal(!showDecimal);
-  }, [showDecimal]);
-
-  const timeValue = useMemo(() => {
-    return {
-      yearValue: formatValue(showDecimal, yearPercent),
-      quarterValue: formatValue(showDecimal, quarterPercent),
-      monthValue: formatValue(showDecimal, monthPercent),
-      weekValue: formatValue(showDecimal, weekPercent),
-      dayValue: formatValue(showDecimal, dayPercent),
-      valentineValue: formatValue(showDecimal, valentinePercent),
-      singlesValue: formatValue(showDecimal, singlesPercent),
-      fathersDayValue: formatValue(showDecimal, fathersDayPercent),
-      mothersDayValue: formatValue(showDecimal, mothersDayPercent),
-    };
-  }, [
-    showDecimal,
-    yearPercent,
-    quarterPercent,
-    monthPercent,
-    weekPercent,
-    dayPercent,
-    valentinePercent,
-    singlesPercent,
-    fathersDayPercent,
-    mothersDayPercent,
-  ]);
+    setShowDays(!showDays);
+  }, [showDays]);
 
   return (
     <div className={css.App}>
@@ -77,33 +54,46 @@ const App = () => {
         <div className={css.box}>
           <div className={css.titleDiv}>
             <div className={css.bigTitle}>Progress</div>
-            <Switch isChecked={showDecimal} toggleSwitch={toggleSwitch} />
+            <Switch isChecked={showDays} toggleSwitch={toggleSwitch} />
           </div>
           <div className={css.bigDescription}>{now}</div>
 
-          <Progress title="Year" percentage={timeValue.yearValue}></Progress>
+          <Progress title="Year" data={yearData} showDiff={showDays}></Progress>
           <Progress
             title="Quarter"
-            percentage={timeValue.quarterValue}
+            data={quarterData}
+            showDiff={showDays}
           ></Progress>
-          <Progress title="Month" percentage={timeValue.monthValue}></Progress>
-          <Progress title="Week" percentage={timeValue.weekValue}></Progress>
-          <Progress title="Today" percentage={timeValue.dayValue}></Progress>
+          <Progress
+            title="Month"
+            data={monthData}
+            showDiff={showDays}
+          ></Progress>
+          <Progress title="Week" data={weekData} showDiff={showDays}></Progress>
+          <Progress
+            title="Today"
+            data={todayData}
+            showDiff={showDays}
+          ></Progress>
           <Progress
             title="Next Valentine's Day"
-            percentage={timeValue.valentineValue}
+            data={valentineData}
+            showDiff={showDays}
           ></Progress>
           <Progress
             title="Singles' Day"
-            percentage={timeValue.singlesValue}
+            data={singlesData}
+            showDiff={showDays}
           ></Progress>
           <Progress
             title="Father's Day"
-            percentage={timeValue.fathersDayValue}
+            data={fathersDayData}
+            showDiff={showDays}
           ></Progress>
           <Progress
             title="Mother's Day"
-            percentage={timeValue.mothersDayValue}
+            data={mothersDayData}
+            showDiff={showDays}
           ></Progress>
 
           <div></div>
@@ -117,10 +107,6 @@ const App = () => {
       </div>
     </div>
   );
-};
-
-const formatValue = (showDecimal, value) => {
-  return showDecimal ? value.toFixed(10) : Math.floor(value);
 };
 
 export default App;

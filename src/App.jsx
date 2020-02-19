@@ -6,8 +6,7 @@ import {
   calcMonth,
   calcWeek,
   calcToday,
-  calcValentine,
-  calc1111,
+  calcActualDate,
   calcMonthWeekDay,
 } from './js/calc';
 import Progress from './components/ProgressBar';
@@ -26,6 +25,8 @@ const App = () => {
   const [singlesData, setSinglesData] = useState(defaultValue);
   const [fathersDayData, setFathersDayData] = useState(defaultValue);
   const [mothersDayData, setMothersDayData] = useState(defaultValue);
+  const [christmasData, setChristmasData] = useState(defaultValue);
+  const [halloweenData, setHalloweenData] = useState(defaultValue);
   const [showDays, setShowDays] = useState(false);
 
   useEffect(() => {
@@ -37,10 +38,12 @@ const App = () => {
       setMonthData(calcMonth(newTime));
       setWeekData(calcWeek(newTime));
       setTodayData(calcToday());
-      setValentineData(calcValentine(newTime));
-      setSinglesData(calc1111(newTime));
+      setValentineData(calcActualDate(newTime, '2/14'));
+      setSinglesData(calcActualDate(newTime, '11/11'));
       setFathersDayData(calcMonthWeekDay(newTime, 6, 3, 7));
       setMothersDayData(calcMonthWeekDay(newTime, 5, 2, 7));
+      setChristmasData(calcActualDate(newTime, '12/25'));
+      setHalloweenData(calcActualDate(newTime, '10/31'));
     }, 1000);
   }, []);
 
@@ -81,18 +84,28 @@ const App = () => {
             showDiff={showDays}
           ></Progress>
           <Progress
-            title="Singles' Day"
-            data={singlesData}
+            title="Next Mother's Day"
+            data={mothersDayData}
             showDiff={showDays}
           ></Progress>
           <Progress
-            title="Father's Day"
+            title="Next Father's Day"
             data={fathersDayData}
             showDiff={showDays}
           ></Progress>
           <Progress
-            title="Mother's Day"
-            data={mothersDayData}
+            title="Next Halloween"
+            data={halloweenData}
+            showDiff={showDays}
+          ></Progress>
+          <Progress
+            title="Next Singles' Day"
+            data={singlesData}
+            showDiff={showDays}
+          ></Progress>
+          <Progress
+            title="Next Christmas"
+            data={christmasData}
             showDiff={showDays}
           ></Progress>
 

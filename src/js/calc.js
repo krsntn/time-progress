@@ -66,14 +66,6 @@ export const calcToday = () => {
   };
 };
 
-export const calcValentine = now => {
-  return calcActualDate(now, '2/14');
-};
-
-export const calc1111 = now => {
-  return calcActualDate(now, '11/11');
-};
-
 export const calcMonthWeekDay = (now, month, weekNo, day) => {
   const lastYearDate = getActualDate(
     new Date().getFullYear() - 1,
@@ -111,7 +103,7 @@ export const calcMonthWeekDay = (now, month, weekNo, day) => {
   return calcDayDiff(thisYearDate, now, nextYearDate);
 };
 
-function calcActualDate(now, theDate) {
+export const calcActualDate = (now, theDate) => {
   const lastYearDate = new Date(`${now.getFullYear() - 1}/${theDate}`);
   const thisYearDate = new Date(`${now.getFullYear()}/${theDate}`);
   const nextYearDate = new Date(`${now.getFullYear() + 1}/${theDate}`);
@@ -121,7 +113,7 @@ function calcActualDate(now, theDate) {
   }
 
   return calcDayDiff(thisYearDate, now, nextYearDate);
-}
+};
 
 function calcDayDiff(start, cur, end) {
   start = start.setHours(0, 0, 0, 0);

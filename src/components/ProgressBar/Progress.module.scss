@@ -1,14 +1,16 @@
 .element {
-	margin: 30px 0;
+  margin: 30px 0;
 
-	.title {
-		display: flex;
-		justify-content: space-between;
-		padding-bottom: 3px;
-	}
+  .title {
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 3px;
+    font-weight: 700;
+    font-size: 23px;
+  }
 
-	.progressbar {
-		background-color: #ddd;
-		height: 8px;
-	}
+  .progressbar {
+    background-color: #ddd;
+    height: 15px;
+  }
 }

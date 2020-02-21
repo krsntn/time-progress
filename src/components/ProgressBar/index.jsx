@@ -11,7 +11,7 @@ const Progress = props => {
   return (
     <div className={css.element}>
       <div className={css.title}>
-        <div>{title}</div>
+        <div className={css.progressTitle}>{title}</div>
         <div>{`${showDiff ? days + ' Left' : percentage + '%'}`}</div>
       </div>
       <div className={`${css.progressbar} progress`}>

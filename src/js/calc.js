@@ -1,42 +1,46 @@
-export const calcYear = time => {
-  const today = new Date(time);
+export const calcLongYears = (now, years) => {
+  const diff = now.getFullYear() % years;
+  const start = new Date(now.getFullYear() - diff, 0, 1);
+  const end = new Date(start.getFullYear() + years, 0, 1);
+
+  return calcDayDiff(start, now, end);
+};
+
+export const calcYear = now => {
   const firstDate = new Date(new Date().getFullYear(), 0, 1);
   const lastDate = new Date(new Date().getFullYear() + 1, 0, 1);
 
-  return calcDayDiff(firstDate, today, lastDate);
+  return calcDayDiff(firstDate, now, lastDate);
 };
 
-export const calcQuarter = time => {
-  const today = new Date(time);
+export const calcQuarter = now => {
   const firstDate = new Date(new Date().getFullYear(), 0, 1);
 
   let lastDate = new Date(new Date().getFullYear() + 1, 0, 1);
 
-  if (today.getMonth() < 3) {
+  if (now.getMonth() < 3) {
     lastDate = new Date(new Date().getFullYear(), 3, 1);
-  } else if (today.getMonth() < 6) {
+  } else if (now.getMonth() < 6) {
     lastDate = new Date(new Date().getFullYear(), 6, 1);
-  } else if (today.getMonth() < 9) {
+  } else if (now.getMonth() < 9) {
     lastDate = new Date(new Date().getFullYear(), 9, 1);
   }
 
-  return calcDayDiff(firstDate, today, lastDate);
+  return calcDayDiff(firstDate, now, lastDate);
 };
 
-export const calcMonth = time => {
-  const today = new Date(time);
-  const firstDate = new Date(today.getFullYear(), today.getMonth(), 1);
+export const calcMonth = now => {
+  const firstDate = new Date(now.getFullYear(), now.getMonth(), 1);
   const lastDate = new Date(
     new Date().getFullYear(),
     new Date().getMonth() + 1,
     1
   );
 
-  return calcDayDiff(firstDate, today, lastDate);
+  return calcDayDiff(firstDate, now, lastDate);
 };
 
-export const calcWeek = time => {
-  const now = new Date(time);
+export const calcWeek = now => {
   const firstDate = new Date(
     new Date().setDate(
       now.getDate() - now.getDay() + (now.getDay() === 0 ? -6 : 0)
@@ -47,23 +51,57 @@ export const calcWeek = time => {
   return calcDayDiff(firstDate, now, lastDate);
 };
 
-export const calcToday = () => {
-  const start = new Date();
+export const calcToday = now => {
+  const start = new Date(now);
   start.setHours(0, 0, 0, 0);
 
-  const cur = new Date();
-
-  const end = new Date();
+  const end = new Date(now);
   end.setHours(23, 59, 59, 999);
 
-  const passedDay = Math.abs(cur - start);
+  const passedDay = Math.abs(now - start);
   const totalDay = Math.abs(end - start);
-  const minuteLeft = Math.floor((end - cur) / (1000 * 60) + 1);
+  const remain = Math.floor((end - now) / (1000 * 60 * 60) + 1);
 
   return {
     percentage: Math.floor((passedDay / totalDay) * 100),
-    days: `${minuteLeft} Minute${minuteLeft > 1 && 's'}`,
+    days: `${remain} Hour${remain > 1 && 's'}`,
   };
+};
+
+export const calcHour = now => {
+  const start = new Date(now);
+  start.setHours(start.getHours(), 0, 0, 0);
+  const end = new Date(now);
+  end.setHours(end.getHours() + 1, 0, 0, 0);
+
+  const passed = Math.abs(now - start);
+  const total = Math.abs(end - start);
+  const remain = Math.floor(Math.abs(end - now) / (1000 * 60) + 1);
+
+  return {
+    percentage: Math.floor((passed / total) * 100),
+    days: `${remain} Minute${remain > 1 && 's'}`,
+  };
+};
+
+export const calcLastSpecificDayOfMonth = (now, month, day) => {
+  let lastYearDate = getDate(new Date(now.getFullYear() - 1, month, 0));
+  let thisYearDate = getDate(new Date(now.getFullYear(), month, 0));
+  let nextYearDate = getDate(new Date(now.getFullYear() + 1, month, 0));
+
+  function getDate(date) {
+    if (date.getDay() < day) {
+      date.setDate(date.getDate() - 7);
+    }
+    date.setDate(date.getDate() - (date.getDay() - day));
+    return date;
+  }
+
+  if (now < thisYearDate) {
+    return calcDayDiff(lastYearDate, now, thisYearDate);
+  }
+
+  return calcDayDiff(thisYearDate, now, nextYearDate);
 };
 
 export const calcMonthWeekDay = (now, month, weekNo, day) => {

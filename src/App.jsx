@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
+import { Helmet } from 'react-helmet';
 import css from './App.module.scss';
 import {
   calcLongYears,
@@ -36,10 +37,12 @@ const App = () => {
   const [blackFridayData, setBlackFridayData] = useState(defaultValue);
   const [myBirthdayData, setMyBirthdayData] = useState(defaultValue);
   const [showDays, setShowDays] = useState(false);
+  const [dots, setDots] = useState('');
 
   useEffect(() => {
     setInterval(() => {
       const now = new Date();
+      setDots('.'.repeat(now.getSeconds() % 4));
       setNow(now.toLocaleString());
       setCenturyData(calcLongYears(now, 100));
       setDecadeData(calcLongYears(now, 10));
@@ -66,51 +69,68 @@ const App = () => {
 
   return (
     <div className={css.App}>
+      <Helmet>
+        <title>Time Progress{dots}</title>
+        <meta name="description" content="Nested component" />
+      </Helmet>
       <div className="container">
         <div className={css.box}>
           <div className={css.titleDiv}>
-            <div className={css.bigTitle}>📈 Progress</div>
+            <div className={css.bigTitle}>
+              <span role="img" aria-labelledby="emoji">
+                📈
+              </span>{' '}
+              Progress
+            </div>
             <Switch isChecked={showDays} toggleSwitch={toggleSwitch} />
           </div>
           <div className={css.bigDescription}>{now}</div>
 
           <Progress
-            title="🌎 Hour"
+            emoji="🕐"
+            title="Hour"
             data={hourData}
             showDiff={showDays}
           ></Progress>
           <Progress
-            title="🌎 Today"
+            emoji="🌎"
+            title="Today"
             data={todayData}
             showDiff={showDays}
           ></Progress>
           <Progress
-            title="👨‍💼 Week"
+            emoji="👨‍💼"
+            title="Week"
             data={weekData}
             showDiff={showDays}
           ></Progress>
           <Progress
-            title="📅 Month"
+            emoji="📅"
+            title="Month"
             data={monthData}
             showDiff={showDays}
           ></Progress>
           <Progress
-            title="🌘 Quarter"
+            emoji="🌘"
+            title="Quarter"
             data={quarterData}
             showDiff={showDays}
           ></Progress>
           <Progress
-            title="🎆 Year"
+            emoji="🎆"
+            title="Year"
             data={yearData}
             showDiff={showDays}
           ></Progress>
           <Progress
-            title="🌠 Decade"
+            emoji="🌠"
+            title="Decade"
             data={decadeData}
             showDiff={showDays}
           ></Progress>
           <Progress
-            title="🌌 Century"
+            emoji="🌌"
+            title="Century"
             data={centuryData}
             showDiff={showDays}
           ></Progress>
@@ -118,37 +138,44 @@ const App = () => {
           <hr />
 
           <Progress
-            title="💑 Next Valentine's Day"
+            emoji="💑"
+            title="Next Valentine's Day"
             data={valentineData}
             showDiff={showDays}
           ></Progress>
           <Progress
-            title="👩🏻 Next Mother's Day"
+            emoji="👩🏻"
+            title="Next Mother's Day"
             data={mothersDayData}
             showDiff={showDays}
           ></Progress>
           <Progress
-            title="👨🏻 Next Father's Day"
+            emoji="👨🏻"
+            title="Next Father's Day"
             data={fathersDayData}
             showDiff={showDays}
           ></Progress>
           <Progress
-            title="👻 Next Halloween"
+            emoji="👻"
+            title="Next Halloween"
             data={halloweenData}
             showDiff={showDays}
           ></Progress>
           <Progress
-            title="🧍‍♂️ Next Singles' Day"
+            emoji="🚶‍♂️"
+            title="️Next Singles' Day"
             data={singlesData}
             showDiff={showDays}
           ></Progress>
           <Progress
-            title="🖤 Next Black Friday"
+            emoji="🖤"
+            title="Next Black Friday"
             data={blackFridayData}
             showDiff={showDays}
           ></Progress>
           <Progress
-            title="🎅🏻 Next Christmas"
+            emoji="🎅🏻"
+            title="Next Christmas"
             data={christmasData}
             showDiff={showDays}
           ></Progress>
@@ -156,7 +183,8 @@ const App = () => {
           <hr />
 
           <Progress
-            title="🎂 My Birthday"
+            emoji="🎂"
+            title="My Cake Day"
             data={myBirthdayData}
             showDiff={showDays}
           ></Progress>

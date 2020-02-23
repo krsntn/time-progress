@@ -3,6 +3,7 @@ import css from './Progress.module.scss';
 
 const Progress = props => {
   const {
+    emoji,
     title,
     data: { percentage, days },
     showDiff,
@@ -11,7 +12,12 @@ const Progress = props => {
   return (
     <div className={css.element}>
       <div className={css.title}>
-        <div className={css.progressTitle}>{title}</div>
+        <div className={css.progressTitle}>
+          <span role="img" aria-labelledby="emoji">
+            {emoji}
+          </span>{' '}
+          {title}
+        </div>
         <div>{`${showDiff ? days + ' Left' : percentage + '%'}`}</div>
       </div>
       <div className={`${css.progressbar} progress`}>

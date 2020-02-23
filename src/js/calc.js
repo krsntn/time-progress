@@ -64,7 +64,7 @@ export const calcToday = now => {
 
   return {
     percentage: Math.floor((passedDay / totalDay) * 100),
-    days: `${remain} Hour${remain > 1 && 's'}`,
+    days: `${remain} Hour${remain > 1 ? 's' : ''}`,
   };
 };
 
@@ -80,7 +80,7 @@ export const calcHour = now => {
 
   return {
     percentage: Math.floor((passed / total) * 100),
-    days: `${remain} Minute${remain > 1 && 's'}`,
+    days: `${remain} Minute${remain > 1 ? 's' : ''}`,
   };
 };
 
@@ -163,6 +163,6 @@ function calcDayDiff(start, cur, end) {
 
   return {
     percentage: Math.floor((diffTime / totalDiffInMilliseconds) * 100),
-    days: `${daysLeft} Day${daysLeft > 1 && 's'}`,
+    days: `${daysLeft} Day${daysLeft > 1 ? 's' : ''}`,
   };
 }

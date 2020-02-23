@@ -41,11 +41,7 @@ export const calcMonth = now => {
 };
 
 export const calcWeek = now => {
-  const firstDate = new Date(
-    new Date().setDate(
-      now.getDate() - now.getDay() + (now.getDay() === 0 ? -6 : 0)
-    )
-  );
+  const firstDate = new Date(new Date().setDate(now.getDate() - now.getDay()));
   const lastDate = new Date(new Date().setDate(firstDate.getDate() + 7));
 
   return calcDayDiff(firstDate, now, lastDate);

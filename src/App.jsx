@@ -29,6 +29,7 @@ const App = () => {
   const [todayData, setTodayData] = useState(defaultValue);
   const [hourData, setHourData] = useState(defaultValue);
   const [valentineData, setValentineData] = useState(defaultValue);
+  const [womenData, setWomenData] = useState(defaultValue);
   const [singlesData, setSinglesData] = useState(defaultValue);
   const [fathersDayData, setFathersDayData] = useState(defaultValue);
   const [mothersDayData, setMothersDayData] = useState(defaultValue);
@@ -53,6 +54,7 @@ const App = () => {
       setTodayData(calcToday(now));
       setHourData(calcHour(now));
       setValentineData(calcActualDate(now, '2/14'));
+      setWomenData(calcActualDate(now, '3/8'));
       setSinglesData(calcActualDate(now, '11/11'));
       setFathersDayData(calcMonthWeekDay(now, 6, 3, 7));
       setMothersDayData(calcMonthWeekDay(now, 5, 2, 7));
@@ -91,49 +93,49 @@ const App = () => {
             title="Hour"
             data={hourData}
             showDiff={showDays}
-          ></Progress>
+          />
           <Progress
             emoji="🌎"
             title="Today"
             data={todayData}
             showDiff={showDays}
-          ></Progress>
+          />
           <Progress
             emoji="👨‍💼"
             title="Week"
             data={weekData}
             showDiff={showDays}
-          ></Progress>
+          />
           <Progress
             emoji="📅"
             title="Month"
             data={monthData}
             showDiff={showDays}
-          ></Progress>
+          />
           <Progress
             emoji="🌘"
             title="Quarter"
             data={quarterData}
             showDiff={showDays}
-          ></Progress>
+          />
           <Progress
             emoji="🎆"
             title="Year"
             data={yearData}
             showDiff={showDays}
-          ></Progress>
+          />
           <Progress
             emoji="🌠"
             title="Decade"
             data={decadeData}
             showDiff={showDays}
-          ></Progress>
+          />
           <Progress
             emoji="🌌"
             title="Century"
             data={centuryData}
             showDiff={showDays}
-          ></Progress>
+          />
 
           <hr />
 
@@ -142,43 +144,49 @@ const App = () => {
             title="Next Valentine's Day"
             data={valentineData}
             showDiff={showDays}
-          ></Progress>
+          />
+          <Progress
+            emoji="💑"
+            title="Next Int. Women's Day"
+            data={womenData}
+            showDiff={showDays}
+          />
           <Progress
             emoji="👩🏻"
             title="Next Mother's Day"
             data={mothersDayData}
             showDiff={showDays}
-          ></Progress>
+          />
           <Progress
             emoji="👨🏻"
             title="Next Father's Day"
             data={fathersDayData}
             showDiff={showDays}
-          ></Progress>
+          />
           <Progress
             emoji="👻"
             title="Next Halloween"
             data={halloweenData}
             showDiff={showDays}
-          ></Progress>
+          />
           <Progress
             emoji="🚶‍♂️"
             title="️Next Singles' Day"
             data={singlesData}
             showDiff={showDays}
-          ></Progress>
+          />
           <Progress
             emoji="🖤"
             title="Next Black Friday"
             data={blackFridayData}
             showDiff={showDays}
-          ></Progress>
+          />
           <Progress
             emoji="🎅🏻"
             title="Next Christmas"
             data={christmasData}
             showDiff={showDays}
-          ></Progress>
+          />
 
           <hr />
 
@@ -187,7 +195,7 @@ const App = () => {
             title="My Cake Day"
             data={myBirthdayData}
             showDiff={showDays}
-          ></Progress>
+          />
 
           <div></div>
           <div className={css.footer}>

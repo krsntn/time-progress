@@ -19,7 +19,7 @@ import Switch from './components/Switch';
 const defaultValue = { percentage: 0, days: 0 };
 
 const App = () => {
-  const [now, setNow] = useState(new Date().toLocaleString());
+  const [now, setNow] = useState(new Date());
   const [centuryData, setCenturyData] = useState(defaultValue);
   const [decadeData, setDecadeData] = useState(defaultValue);
   const [yearData, setYearData] = useState(defaultValue);
@@ -41,10 +41,8 @@ const App = () => {
   const [dots, setDots] = useState('');
 
   useEffect(() => {
-    setInterval(() => {
-      const now = new Date();
+    setTimeout(() => {
       setDots('.'.repeat(now.getSeconds() % 4));
-      setNow(now.toLocaleString());
       setCenturyData(calcLongYears(now, 100));
       setDecadeData(calcLongYears(now, 10));
       setYearData(calcYear(now));
@@ -62,8 +60,9 @@ const App = () => {
       setHalloweenData(calcActualDate(now, '10/31'));
       setBlackFridayData(calcLastSpecificDayOfMonth(now, 11, 5));
       setMyBirthdayData(calcActualDate(now, '6/16'));
+      setNow(new Date());
     }, 1000);
-  }, []);
+  }, [now]);
 
   const toggleSwitch = useCallback(() => {
     setShowDays(!showDays);
@@ -86,7 +85,7 @@ const App = () => {
             </div>
             <Switch isChecked={showDays} toggleSwitch={toggleSwitch} />
           </div>
-          <div className={css.bigDescription}>{now}</div>
+          <div className={css.bigDescription}>{now.toLocaleString()}</div>
 
           <Progress
             emoji="🕐"
@@ -146,7 +145,7 @@ const App = () => {
             showDiff={showDays}
           />
           <Progress
-            emoji="💑"
+            emoji="🙋‍♀️"
             title="Next Int. Women's Day"
             data={womenData}
             showDiff={showDays}

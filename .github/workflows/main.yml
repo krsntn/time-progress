@@ -29,7 +29,7 @@ jobs:
           npm i
           npm run build
           echo Build done!
-          
+
   deploy:
     name: Deploy
     needs: build
@@ -43,5 +43,3 @@ jobs:
           args: deploy --only hosting:[time-progress]
         env:
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
-      - run: echo Deployment done!
-    

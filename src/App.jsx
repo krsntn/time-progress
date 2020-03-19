@@ -60,7 +60,7 @@ const App = () => {
       setChristmasData(calcActualDate(now, '12/25'));
       setHalloweenData(calcActualDate(now, '10/31'));
       setBlackFridayData(calcLastSpecificDayOfMonth(now, 11, 5));
-      setStarWarsDayData(calcActualDate(now, '4/5'));
+      setStarWarsDayData(calcActualDate(now, '5/4'));
       setMyBirthdayData(calcActualDate(now, '6/16'));
       setNow(new Date());
     }, 1000);

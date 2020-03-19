@@ -153,15 +153,15 @@ const App = () => {
             showDiff={showDays}
           />
           <Progress
-            emoji="👩🏻"
-            title="Next Mother's Day"
-            data={mothersDayData}
-            showDiff={showDays}
-          />
-          <Progress
             emoji="✨"
             title="Next Star Wars Day"
             data={starWarsDayData}
+            showDiff={showDays}
+          />
+          <Progress
+            emoji="👩🏻"
+            title="Next Mother's Day"
+            data={mothersDayData}
             showDiff={showDays}
           />
           <Progress

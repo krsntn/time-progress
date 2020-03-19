@@ -36,6 +36,7 @@ const App = () => {
   const [christmasData, setChristmasData] = useState(defaultValue);
   const [halloweenData, setHalloweenData] = useState(defaultValue);
   const [blackFridayData, setBlackFridayData] = useState(defaultValue);
+  const [starWarsDayData, setStarWarsDayData] = useState(defaultValue);
   const [myBirthdayData, setMyBirthdayData] = useState(defaultValue);
   const [showDays, setShowDays] = useState(false);
   const [dots, setDots] = useState('');
@@ -59,6 +60,7 @@ const App = () => {
       setChristmasData(calcActualDate(now, '12/25'));
       setHalloweenData(calcActualDate(now, '10/31'));
       setBlackFridayData(calcLastSpecificDayOfMonth(now, 11, 5));
+      setStarWarsDayData(calcActualDate(now, '4/5'));
       setMyBirthdayData(calcActualDate(now, '6/16'));
       setNow(new Date());
     }, 1000);
@@ -154,6 +156,12 @@ const App = () => {
             emoji="👩🏻"
             title="Next Mother's Day"
             data={mothersDayData}
+            showDiff={showDays}
+          />
+          <Progress
+            emoji="✨"
+            title="Next Star Wars Day"
+            data={starWarsDayData}
             showDiff={showDays}
           />
           <Progress

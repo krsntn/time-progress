@@ -20,6 +20,7 @@ const defaultValue = { percentage: 0, days: 0 };
 
 const App = () => {
   const [now, setNow] = useState(new Date());
+  const [millenniumData, setMillenniumData] = useState(defaultValue);
   const [centuryData, setCenturyData] = useState(defaultValue);
   const [decadeData, setDecadeData] = useState(defaultValue);
   const [yearData, setYearData] = useState(defaultValue);
@@ -37,6 +38,11 @@ const App = () => {
   const [halloweenData, setHalloweenData] = useState(defaultValue);
   const [blackFridayData, setBlackFridayData] = useState(defaultValue);
   const [starWarsDayData, setStarWarsDayData] = useState(defaultValue);
+  const [aprilFoolData, setAprilFoolData] = useState(defaultValue);
+  const [labourDayData, setLabourDayData] = useState(defaultValue);
+  const [worldCancerDayData, setWorldCancerDayData] = useState(defaultValue);
+  const [earthDayData, setEarthDayData] = useState(defaultValue);
+  const [independenceDayData, setIndependenceDayData] = useState(defaultValue);
   const [myBirthdayData, setMyBirthdayData] = useState(defaultValue);
   const [showDays, setShowDays] = useState(false);
   const [dots, setDots] = useState('');
@@ -44,6 +50,7 @@ const App = () => {
   useEffect(() => {
     setTimeout(() => {
       setDots('.'.repeat(now.getSeconds() % 4));
+      setMillenniumData(calcLongYears(now, 1000));
       setCenturyData(calcLongYears(now, 100));
       setDecadeData(calcLongYears(now, 10));
       setYearData(calcYear(now));
@@ -61,6 +68,11 @@ const App = () => {
       setHalloweenData(calcActualDate(now, '10/31'));
       setBlackFridayData(calcLastSpecificDayOfMonth(now, 11, 5));
       setStarWarsDayData(calcActualDate(now, '5/4'));
+      setAprilFoolData(calcActualDate(now, '4/1'));
+      setLabourDayData(calcActualDate(now, '5/1'));
+      setWorldCancerDayData(calcActualDate(now, '2/4'));
+      setEarthDayData(calcActualDate(now, '4/22'));
+      setIndependenceDayData(calcActualDate(now, '7/4'));
       setMyBirthdayData(calcActualDate(now, '6/16'));
       setNow(new Date());
     }, 1000);
@@ -137,61 +149,103 @@ const App = () => {
             data={centuryData}
             showDiff={showDays}
           />
+          <Progress
+            emoji="🏞"
+            title="Millennium"
+            data={millenniumData}
+            showDiff={showDays}
+          />
 
           <hr />
 
           <Progress
+            emoji="👩‍⚕️"
+            title="World Cancer Day"
+            data={worldCancerDayData}
+            showDiff={showDays}
+          />
+          <Progress
             emoji="💑"
-            title="Next Valentine's Day"
+            title="Valentine's Day"
             data={valentineData}
             showDiff={showDays}
           />
           <Progress
             emoji="🙋‍♀️"
-            title="Next Int. Women's Day"
+            title="Int. Women's Day"
             data={womenData}
             showDiff={showDays}
           />
           <Progress
+            emoji="🤡"
+            title="April Fools' Day"
+            data={aprilFoolData}
+            showDiff={showDays}
+          />
+          <Progress
+            emoji="🌎"
+            title="Earth Day"
+            data={earthDayData}
+            showDiff={showDays}
+          />
+          <Progress
+            emoji="👷‍♂️"
+            title="Labour Day"
+            data={labourDayData}
+            showDiff={showDays}
+          />
+          <Progress
             emoji="✨"
-            title="Next Star Wars Day"
+            title="Star Wars Day"
             data={starWarsDayData}
             showDiff={showDays}
           />
           <Progress
             emoji="👩🏻"
-            title="Next Mother's Day"
+            title="Mother's Day"
             data={mothersDayData}
             showDiff={showDays}
           />
           <Progress
             emoji="👨🏻"
-            title="Next Father's Day"
+            title="Father's Day"
             data={fathersDayData}
             showDiff={showDays}
           />
           <Progress
+            emoji="🇺🇸"
+            title="Independence Day"
+            data={independenceDayData}
+            showDiff={showDays}
+          />
+          <Progress
             emoji="👻"
-            title="Next Halloween"
+            title="Halloween"
             data={halloweenData}
             showDiff={showDays}
           />
           <Progress
             emoji="🚶‍♂️"
-            title="️Next Singles' Day"
+            title="️Singles' Day"
             data={singlesData}
             showDiff={showDays}
           />
           <Progress
             emoji="🖤"
-            title="Next Black Friday"
+            title="Black Friday"
             data={blackFridayData}
             showDiff={showDays}
           />
           <Progress
             emoji="🎅🏻"
-            title="Next Christmas"
+            title="Christmas"
             data={christmasData}
+            showDiff={showDays}
+          />
+          <Progress
+            emoji="🎉"
+            title="New Year"
+            data={yearData}
             showDiff={showDays}
           />
 

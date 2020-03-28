@@ -20,6 +20,7 @@ import VerticalProgressBar from './components/VerticalProgressBar';
 const defaultValue = { percentage: 0, days: 0 };
 
 const App = () => {
+  const [imageLoaded, setImageLoaded] = useState(false);
   const [now, setNow] = useState(new Date());
   const [millenniumData, setMillenniumData] = useState(defaultValue);
   const [centuryData, setCenturyData] = useState(defaultValue);
@@ -47,6 +48,15 @@ const App = () => {
   const [myBirthdayData, setMyBirthdayData] = useState(defaultValue);
   const [showDays, setShowDays] = useState(false);
   const [dots, setDots] = useState('');
+
+  useEffect(() => {
+    // console.log(document.querySelector(''));
+    window.addEventListener('DOMContentLoaded', () => {
+      console.log('test');
+      alert(99);
+    });
+    return () => {};
+  }, []);
 
   useEffect(() => {
     setTimeout(() => {
@@ -264,7 +274,7 @@ const App = () => {
           <div className={css.footer}>
             <div>The only progress bar you'd rather see go slower.</div>
             <div>
-              Made by <a href="https://github.com/krsntn">Karson.</a>
+              Made by <a href="http://karson.tk">Karson.</a>
             </div>
           </div>
         </div>

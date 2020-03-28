@@ -15,6 +15,7 @@ import {
 } from './js/calc';
 import Progress from './components/ProgressBar';
 import Switch from './components/Switch';
+import VerticalProgressBar from './components/VerticalProgressBar';
 
 const defaultValue = { percentage: 0, days: 0 };
 
@@ -88,7 +89,8 @@ const App = () => {
         <title>Time Progress{dots}</title>
         <meta name="description" content="Nested component" />
       </Helmet>
-      <div className="container">
+      <VerticalProgressBar />
+      <div className={`container ${css.main}`}>
         <div className={css.box}>
           <div className={css.titleDiv}>
             <div className={css.bigTitle}>

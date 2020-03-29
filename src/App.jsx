@@ -22,7 +22,7 @@ const defaultValue = { percentage: 0, days: 0 };
 
 const App = () => {
   const [now, setNow] = useState(new Date());
-  const [quarantine, setQuarantine] = useState(defaultValue);
+  const [mco, setMCO] = useState(defaultValue);
   const [millenniumData, setMillenniumData] = useState(defaultValue);
   const [centuryData, setCenturyData] = useState(defaultValue);
   const [decadeData, setDecadeData] = useState(defaultValue);
@@ -53,7 +53,7 @@ const App = () => {
   useEffect(() => {
     setTimeout(() => {
       setDots('.'.repeat(now.getSeconds() % 4));
-      setQuarantine(calcFromTo('2020/3/14', now, '2020/4/14'));
+      setMCO(calcFromTo('2020/3/18', now, '2020/4/14'));
       setMillenniumData(calcLongYears(now, 1000));
       setCenturyData(calcLongYears(now, 100));
       setDecadeData(calcLongYears(now, 10));
@@ -108,8 +108,8 @@ const App = () => {
 
           <Progress
             emoji="🤕"
-            title="Quarantine"
-            data={quarantine}
+            title="Movement Control Order"
+            data={mco}
             showDiff={showDays}
             outbreak
           />

@@ -14,3 +14,20 @@
     height: 15px;
   }
 }
+
+.outbreak {
+  animation: blinking 2s linear infinite;
+  padding: 30px 20px;
+}
+
+@keyframes blinking {
+  0% {
+    background-color: transparent;
+  }
+  50% {
+    background-color: #cc6e6e;
+  }
+  100% {
+    background-color: transparent;
+  }
+}

@@ -162,3 +162,11 @@ function calcDayDiff(start, cur, end) {
     days: `${daysLeft} Day${daysLeft > 1 ? 's' : ''}`,
   };
 }
+
+export function calcFromTo(start, now, end) {
+  const startDate = new Date(start);
+  const nowTime = new Date(now);
+  const endDate = new Date(end);
+
+  return calcDayDiff(startDate, nowTime, endDate);
+}

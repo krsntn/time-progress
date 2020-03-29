@@ -7,10 +7,11 @@ const Progress = props => {
     title,
     data: { percentage, days },
     showDiff,
+    outbreak,
   } = props;
 
   return (
-    <div className={css.element}>
+    <div className={`${css.element} ${outbreak ? css.outbreak : ''}`}>
       <div className={css.title}>
         <div className={css.progressTitle}>
           <span role="img" aria-labelledby="emoji">

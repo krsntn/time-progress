@@ -12,6 +12,7 @@ import {
   calcActualDate,
   calcMonthWeekDay,
   calcLastSpecificDayOfMonth,
+  calcFromTo,
 } from './js/calc';
 import Progress from './components/ProgressBar';
 import Switch from './components/Switch';
@@ -20,8 +21,8 @@ import VerticalProgressBar from './components/VerticalProgressBar';
 const defaultValue = { percentage: 0, days: 0 };
 
 const App = () => {
-  const [imageLoaded, setImageLoaded] = useState(false);
   const [now, setNow] = useState(new Date());
+  const [quarantine, setQuarantine] = useState(defaultValue);
   const [millenniumData, setMillenniumData] = useState(defaultValue);
   const [centuryData, setCenturyData] = useState(defaultValue);
   const [decadeData, setDecadeData] = useState(defaultValue);
@@ -50,17 +51,9 @@ const App = () => {
   const [dots, setDots] = useState('');
 
   useEffect(() => {
-    // console.log(document.querySelector(''));
-    window.addEventListener('DOMContentLoaded', () => {
-      console.log('test');
-      alert(99);
-    });
-    return () => {};
-  }, []);
-
-  useEffect(() => {
     setTimeout(() => {
       setDots('.'.repeat(now.getSeconds() % 4));
+      setQuarantine(calcFromTo('2020/3/14', now, '2020/4/14'));
       setMillenniumData(calcLongYears(now, 1000));
       setCenturyData(calcLongYears(now, 100));
       setDecadeData(calcLongYears(now, 10));
@@ -112,6 +105,14 @@ const App = () => {
             <Switch isChecked={showDays} toggleSwitch={toggleSwitch} />
           </div>
           <div className={css.bigDescription}>{now.toLocaleString()}</div>
+
+          <Progress
+            emoji="🤕"
+            title="Quarantine"
+            data={quarantine}
+            showDiff={showDays}
+            outbreak
+          />
 
           <Progress
             emoji="🕐"

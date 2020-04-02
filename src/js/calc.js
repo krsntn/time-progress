@@ -14,17 +14,20 @@ export const calcYear = now => {
 };
 
 export const calcQuarter = now => {
-  const firstDate = new Date(new Date().getFullYear(), 0, 1);
-
-  let lastDate = new Date(new Date().getFullYear() + 1, 0, 1);
+  let month = 0;
 
   if (now.getMonth() < 3) {
-    lastDate = new Date(new Date().getFullYear(), 3, 1);
+    month = 0;
   } else if (now.getMonth() < 6) {
-    lastDate = new Date(new Date().getFullYear(), 6, 1);
+    month = 3;
   } else if (now.getMonth() < 9) {
-    lastDate = new Date(new Date().getFullYear(), 9, 1);
+    month = 6;
+  } else {
+    month = 9;
   }
+
+  const firstDate = new Date(new Date().getFullYear(), month, 1);
+  const lastDate = new Date(new Date().getFullYear(), month + 3, 1);
 
   return calcDayDiff(firstDate, now, lastDate);
 };

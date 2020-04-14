@@ -53,7 +53,7 @@ const App = () => {
   useEffect(() => {
     setTimeout(() => {
       setDots('.'.repeat(now.getSeconds() % 4));
-      setMCO(calcFromTo('2020/3/18', now, '2020/4/14'));
+      setMCO(calcFromTo('2020/3/18', now, '2020/4/28'));
       setMillenniumData(calcLongYears(now, 1000));
       setCenturyData(calcLongYears(now, 100));
       setDecadeData(calcLongYears(now, 10));

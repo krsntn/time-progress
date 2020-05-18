@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useCallback } from 'react';
 import css from './Progress.module.scss';
 
 const Progress = (props) => {
@@ -10,7 +10,7 @@ const Progress = (props) => {
     outbreak,
   } = props;
 
-  const displayDiff = useMemo(() => {
+  const displayDiff = useCallback(() => {
     if (showDiff) {
       if (days === 0) {
         return `Today!`;

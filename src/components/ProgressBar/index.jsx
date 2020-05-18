@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import css from './Progress.module.scss';
 
-const Progress = props => {
+const Progress = (props) => {
   const {
     emoji,
     title,
@@ -9,6 +9,19 @@ const Progress = props => {
     showDiff,
     outbreak,
   } = props;
+
+  const displayDiff = useMemo(() => {
+    if (showDiff) {
+      if (days === 0) {
+        return `Today!`;
+      } else if (days < 0) {
+        return `${days} After`;
+      }
+      return `${days} Left`;
+    } else {
+      return `${percentage}%`;
+    }
+  }, [showDiff, percentage, days]);
 
   return (
     <div className={`${css.element} ${outbreak ? css.outbreak : ''}`}>
@@ -19,7 +32,7 @@ const Progress = props => {
           </span>{' '}
           {title}
         </div>
-        <div>{`${showDiff ? days + ' Left' : percentage + '%'}`}</div>
+        <div>{displayDiff()}</div>
       </div>
       <div className={`${css.progressbar} progress`}>
         <div

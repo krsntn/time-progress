@@ -53,7 +53,7 @@ const App = () => {
   useEffect(() => {
     setTimeout(() => {
       setDots('.'.repeat(now.getSeconds() % 4));
-      setMCO(calcFromTo('2020/3/18', now, '2020/6/9'));
+      setMCO(calcFromTo('2020/3/18', now, '2021/1/1'));
       setMillenniumData(calcLongYears(now, 1000));
       setCenturyData(calcLongYears(now, 100));
       setDecadeData(calcLongYears(now, 10));
@@ -111,7 +111,7 @@ const App = () => {
             title="Movement Control Order"
             data={mco}
             showDiff={showDays}
-            outbreak
+            // outbreak
           />
 
           <Progress

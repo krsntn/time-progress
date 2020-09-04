@@ -6,14 +6,14 @@ export const calcLongYears = (now, years) => {
   return calcDayDiff(start, now, end);
 };
 
-export const calcYear = now => {
+export const calcYear = (now) => {
   const firstDate = new Date(new Date().getFullYear(), 0, 1);
   const lastDate = new Date(new Date().getFullYear() + 1, 0, 1);
 
   return calcDayDiff(firstDate, now, lastDate);
 };
 
-export const calcQuarter = now => {
+export const calcQuarter = (now) => {
   let month = 0;
 
   if (now.getMonth() < 3) {
@@ -32,7 +32,7 @@ export const calcQuarter = now => {
   return calcDayDiff(firstDate, now, lastDate);
 };
 
-export const calcMonth = now => {
+export const calcMonth = (now) => {
   const firstDate = new Date(now.getFullYear(), now.getMonth(), 1);
   const lastDate = new Date(
     new Date().getFullYear(),
@@ -43,14 +43,25 @@ export const calcMonth = now => {
   return calcDayDiff(firstDate, now, lastDate);
 };
 
-export const calcWeek = now => {
+export const calcWeek = (now) => {
   const firstDate = new Date(new Date().setDate(now.getDate() - now.getDay()));
-  const lastDate = new Date(new Date().setDate(firstDate.getDate() + 7));
+  let addDays = firstDate.getDate() + 7;
+  const totalDays = new Date(
+    firstDate.getFullYear(),
+    firstDate.getMonth(),
+    0
+  ).getDate();
+
+  if (addDays > totalDays) {
+    addDays -= totalDays;
+  }
+
+  const lastDate = new Date(new Date().setDate(addDays));
 
   return calcDayDiff(firstDate, now, lastDate);
 };
 
-export const calcToday = now => {
+export const calcToday = (now) => {
   const start = new Date(now);
   start.setHours(0, 0, 0, 0);
 
@@ -67,7 +78,7 @@ export const calcToday = now => {
   };
 };
 
-export const calcHour = now => {
+export const calcHour = (now) => {
   const start = new Date(now);
   start.setHours(start.getHours(), 0, 0, 0);
   const end = new Date(now);

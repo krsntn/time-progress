@@ -275,7 +275,7 @@ const App = () => {
           <div className={css.footer}>
             <div>The only progress bar you'd rather see go slower.</div>
             <div>
-              Made by <a href="http://karson.tk">Karson.</a>
+              Build by <a href="http://dev.krsn.xyz">karson.</a>
             </div>
           </div>
         </div>

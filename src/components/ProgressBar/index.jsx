@@ -12,12 +12,17 @@ const Progress = (props) => {
 
   const displayDiff = useCallback(() => {
     if (showDiff) {
+      if (typeof days !== 'number') {
+        return `${days} Left`;
+      }
+
+      const daySpan = `Day${days === -1 || days === 1 ? '' : 's'}`;
       if (days === 0) {
         return `Today!`;
       } else if (days < 0) {
-        return `${days} After`;
+        return `${Math.abs(days)} ${daySpan} Over`;
       }
-      return `${days} Left`;
+      return `${days} ${daySpan} Left`;
     } else {
       return `${percentage}%`;
     }

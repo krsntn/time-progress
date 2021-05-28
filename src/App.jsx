@@ -17,11 +17,117 @@ import {
 import Progress from './components/ProgressBar';
 import Switch from './components/Switch';
 import VerticalProgressBar from './components/VerticalProgressBar';
+import { Timer } from 'ez-timer';
 
 const defaultValue = { percentage: 0, days: 0 };
 
+// const list = [
+//   {
+//     id: 'mco',
+//     emoji: '😷',
+//     title: 'MCO',
+//     data: {},
+//     showDiff: true,
+//   },
+//   {
+//     emoji: '👩‍⚕️',
+//     title: 'World Cancer Day',
+//     data: {},
+//     showDiff: true,
+//   },
+//   {
+//     emoji: '💑',
+//     title: "Valentine's Day",
+//     data: {},
+//     showDiff: true,
+//   },
+//   {
+//     emoji: '🙋‍♀️',
+//     title: "Int. Women's Day",
+//     data: {},
+//     showDiff: true,
+//   },
+//   {
+//     emoji: '🤡',
+//     title: "April Fools' Day",
+//     data: {},
+//     showDiff: true,
+//   },
+//   {
+//     emoji: '🌎',
+//     title: 'Earth Day',
+//     data: {},
+//     showDiff: true,
+//   },
+//   {
+//     emoji: '👷‍♂️',
+//     title: 'Labour Day',
+//     data: {},
+//     showDiff: true,
+//   },
+//   {
+//     emoji: '✨',
+//     title: 'Star Wars Day',
+//     data: {},
+//     showDiff: true,
+//   },
+//   {
+//     emoji: '👩🏻',
+//     title: "Mother's Day",
+//     data: {},
+//     showDiff: true,
+//   },
+//   {
+//     emoji: '👨🏻',
+//     title: "Father's Day",
+//     data: {},
+//     showDiff: true,
+//   },
+//   {
+//     emoji: '🇺🇸',
+//     title: 'Independence Day',
+//     data: {},
+//     showDiff: true,
+//   },
+//   {
+//     emoji: '🇯🇵',
+//     title: '2020 Summer Olympics',
+//     data: {},
+//     showDiff: true,
+//   },
+//   {
+//     emoji: '👻',
+//     title: 'Halloween',
+//     data: {},
+//     showDiff: true,
+//   },
+//   {
+//     emoji: '🚶‍♂️',
+//     title: "️Singles' Day",
+//     data: {},
+//     showDiff: true,
+//   },
+//   {
+//     emoji: '🖤',
+//     title: 'Black Friday',
+//     data: {},
+//     showDiff: true,
+//   },
+//   {
+//     emoji: '🎅🏻',
+//     title: 'Christmas',
+//     data: {},
+//     showDiff: true,
+//   },
+//   {
+//     emoji: '🎉',
+//     title: 'New Year',
+//     data: {},
+//     showDiff: true,
+//   },
+// ];
+
 const App = () => {
-  const [now, setNow] = useState(new Date());
   const [mco, setMCO] = useState(defaultValue);
   const [millenniumData, setMillenniumData] = useState(defaultValue);
   const [centuryData, setCenturyData] = useState(defaultValue);
@@ -38,6 +144,7 @@ const App = () => {
   const [fathersDayData, setFathersDayData] = useState(defaultValue);
   const [mothersDayData, setMothersDayData] = useState(defaultValue);
   const [christmasData, setChristmasData] = useState(defaultValue);
+  const [olympicsData, setOlympicsData] = useState(defaultValue);
   const [halloweenData, setHalloweenData] = useState(defaultValue);
   const [blackFridayData, setBlackFridayData] = useState(defaultValue);
   const [starWarsDayData, setStarWarsDayData] = useState(defaultValue);
@@ -50,37 +157,45 @@ const App = () => {
   const [showDays, setShowDays] = useState(false);
   const [dots, setDots] = useState('');
 
+  const updateProgress = useCallback((now) => {
+    setDots('.'.repeat(now.getSeconds() % 4));
+    setMCO(calcFromTo('2020/3/18', now, '2021/1/1'));
+    setMillenniumData(calcLongYears(now, 1000));
+    setCenturyData(calcLongYears(now, 100));
+    setDecadeData(calcLongYears(now, 10));
+    setYearData(calcYear(now));
+    setQuarterData(calcQuarter(now));
+    setMonthData(calcMonth(now));
+    setWeekData(calcWeek(now));
+    setTodayData(calcToday(now));
+    setHourData(calcHour(now));
+    setValentineData(calcActualDate(now, 14, 2));
+    setWomenData(calcActualDate(now, 8, 3));
+    setSinglesData(calcActualDate(now, 11, 11));
+    setFathersDayData(calcMonthWeekDay(now, 6, 3, 7));
+    setMothersDayData(calcMonthWeekDay(now, 5, 2, 7));
+    setChristmasData(calcActualDate(now, 25, 12));
+    setOlympicsData(calcActualDate(now, 23, 7, 2021));
+    setHalloweenData(calcActualDate(now, 31, 10));
+    setBlackFridayData(calcLastSpecificDayOfMonth(now, 11, 5));
+    setStarWarsDayData(calcActualDate(now, 4, 5));
+    setAprilFoolData(calcActualDate(now, 1, 4));
+    setLabourDayData(calcActualDate(now, 1, 5));
+    setWorldCancerDayData(calcActualDate(now, 4, 2));
+    setEarthDayData(calcActualDate(now, 22, 4));
+    setIndependenceDayData(calcActualDate(now, 4, 7));
+    setMyBirthdayData(calcActualDate(now, 16, 6));
+  }, []);
+
   useEffect(() => {
-    setTimeout(() => {
-      setDots('.'.repeat(now.getSeconds() % 4));
-      setMCO(calcFromTo('2020/3/18', now, '2021/1/1'));
-      setMillenniumData(calcLongYears(now, 1000));
-      setCenturyData(calcLongYears(now, 100));
-      setDecadeData(calcLongYears(now, 10));
-      setYearData(calcYear(now));
-      setQuarterData(calcQuarter(now));
-      setMonthData(calcMonth(now));
-      setWeekData(calcWeek(now));
-      setTodayData(calcToday(now));
-      setHourData(calcHour(now));
-      setValentineData(calcActualDate(now, '2/14'));
-      setWomenData(calcActualDate(now, '3/8'));
-      setSinglesData(calcActualDate(now, '11/11'));
-      setFathersDayData(calcMonthWeekDay(now, 6, 3, 7));
-      setMothersDayData(calcMonthWeekDay(now, 5, 2, 7));
-      setChristmasData(calcActualDate(now, '12/25'));
-      setHalloweenData(calcActualDate(now, '10/31'));
-      setBlackFridayData(calcLastSpecificDayOfMonth(now, 11, 5));
-      setStarWarsDayData(calcActualDate(now, '5/4'));
-      setAprilFoolData(calcActualDate(now, '4/1'));
-      setLabourDayData(calcActualDate(now, '5/1'));
-      setWorldCancerDayData(calcActualDate(now, '2/4'));
-      setEarthDayData(calcActualDate(now, '4/22'));
-      setIndependenceDayData(calcActualDate(now, '7/4'));
-      setMyBirthdayData(calcActualDate(now, '6/16'));
-      setNow(new Date());
+    const timer = new Timer(() => {
+      const time = new Date();
+      updateProgress(time);
     }, 1000);
-  }, [now]);
+    timer.start();
+
+    return () => timer.stop();
+  }, [updateProgress]);
 
   const toggleSwitch = useCallback(() => {
     setShowDays(!showDays);
@@ -104,11 +219,13 @@ const App = () => {
             </div>
             <Switch isChecked={showDays} toggleSwitch={toggleSwitch} />
           </div>
-          <div className={css.bigDescription}>{now.toLocaleString()}</div>
+          <div className={css.bigDescription}>
+            {new Date().toLocaleString()}
+          </div>
 
           <Progress
-            emoji="🤕"
-            title="Movement Control Order"
+            emoji="😷"
+            title="MCO"
             data={mco}
             showDiff={showDays}
             // outbreak
@@ -232,6 +349,12 @@ const App = () => {
             showDiff={showDays}
           />
           <Progress
+            emoji="🇯🇵"
+            title="2020 Summer Olympics"
+            data={olympicsData}
+            showDiff={showDays}
+          />
+          <Progress
             emoji="👻"
             title="Halloween"
             data={halloweenData}
@@ -274,6 +397,7 @@ const App = () => {
           <div></div>
           <div className={css.footer}>
             <div>The only progress bar you'd rather see go slower.</div>
+            <br />
             <div>
               Build by <a href="http://dev.krsn.xyz">karson.</a>
             </div>

@@ -151,12 +151,15 @@ export const calcMonthWeekDay = (now, month, weekNo, day) => {
   return calcDayDiff(thisYearDate, now, nextYearDate);
 };
 
-export const calcActualDate = (now, theDate) => {
-  const lastYearDate = new Date(`${now.getFullYear() - 1}/${theDate}`);
-  const thisYearDate = new Date(`${now.getFullYear()}/${theDate}`);
-  const nextYearDate = new Date(`${now.getFullYear() + 1}/${theDate}`);
+export const calcActualDate = (now, day, month, year) => {
+  const dayValue = day;
+  const monthValue = Number(month) || now.getMonth() + 1;
+  const yearValue = Number(year) || now.getFullYear();
+  const lastYearDate = new Date(`${yearValue - 1}/${monthValue}/${dayValue}`);
+  const thisYearDate = new Date(`${yearValue}/${monthValue}/${dayValue}`);
+  const nextYearDate = new Date(`${yearValue + 1}/${monthValue}/${dayValue}`);
 
-  if (now < thisYearDate) {
+  if (now < thisYearDate || (year && now > thisYearDate)) {
     return calcDayDiff(lastYearDate, now, thisYearDate);
   }
 
@@ -173,7 +176,7 @@ function calcDayDiff(start, cur, end) {
 
   return {
     percentage: Math.floor((diffTime / totalDiffInMilliseconds) * 100),
-    days: `${daysLeft} Day${daysLeft > 1 ? 's' : ''}`,
+    days: daysLeft,
   };
 }
 

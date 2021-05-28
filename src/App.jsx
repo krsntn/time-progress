@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useReducer } from 'react';
 import { Helmet } from 'react-helmet';
 import css from './App.module.scss';
 import {
@@ -21,170 +21,219 @@ import { Timer } from 'ez-timer';
 
 const defaultValue = { percentage: 0, days: 0 };
 
-// const list = [
-//   {
-//     id: 'mco',
-//     emoji: '😷',
-//     title: 'MCO',
-//     data: {},
-//     showDiff: true,
-//   },
-//   {
-//     emoji: '👩‍⚕️',
-//     title: 'World Cancer Day',
-//     data: {},
-//     showDiff: true,
-//   },
-//   {
-//     emoji: '💑',
-//     title: "Valentine's Day",
-//     data: {},
-//     showDiff: true,
-//   },
-//   {
-//     emoji: '🙋‍♀️',
-//     title: "Int. Women's Day",
-//     data: {},
-//     showDiff: true,
-//   },
-//   {
-//     emoji: '🤡',
-//     title: "April Fools' Day",
-//     data: {},
-//     showDiff: true,
-//   },
-//   {
-//     emoji: '🌎',
-//     title: 'Earth Day',
-//     data: {},
-//     showDiff: true,
-//   },
-//   {
-//     emoji: '👷‍♂️',
-//     title: 'Labour Day',
-//     data: {},
-//     showDiff: true,
-//   },
-//   {
-//     emoji: '✨',
-//     title: 'Star Wars Day',
-//     data: {},
-//     showDiff: true,
-//   },
-//   {
-//     emoji: '👩🏻',
-//     title: "Mother's Day",
-//     data: {},
-//     showDiff: true,
-//   },
-//   {
-//     emoji: '👨🏻',
-//     title: "Father's Day",
-//     data: {},
-//     showDiff: true,
-//   },
-//   {
-//     emoji: '🇺🇸',
-//     title: 'Independence Day',
-//     data: {},
-//     showDiff: true,
-//   },
-//   {
-//     emoji: '🇯🇵',
-//     title: '2020 Summer Olympics',
-//     data: {},
-//     showDiff: true,
-//   },
-//   {
-//     emoji: '👻',
-//     title: 'Halloween',
-//     data: {},
-//     showDiff: true,
-//   },
-//   {
-//     emoji: '🚶‍♂️',
-//     title: "️Singles' Day",
-//     data: {},
-//     showDiff: true,
-//   },
-//   {
-//     emoji: '🖤',
-//     title: 'Black Friday',
-//     data: {},
-//     showDiff: true,
-//   },
-//   {
-//     emoji: '🎅🏻',
-//     title: 'Christmas',
-//     data: {},
-//     showDiff: true,
-//   },
-//   {
-//     emoji: '🎉',
-//     title: 'New Year',
-//     data: {},
-//     showDiff: true,
-//   },
-// ];
+const initialState = {
+  mco: {
+    emoji: '😷',
+    title: 'MCO',
+    data: defaultValue,
+  },
+  hour: {
+    emoji: '🕐',
+    title: 'Hour',
+    data: defaultValue,
+  },
+  today: {
+    emoji: '🌎',
+    title: 'Today',
+    data: defaultValue,
+  },
+  week: {
+    emoji: '👨‍💼',
+    title: 'Week',
+    data: defaultValue,
+  },
+  month: {
+    emoji: '📅',
+    title: 'Month',
+    data: defaultValue,
+  },
+  quarter: {
+    emoji: '🌘',
+    title: 'Quarter',
+    data: defaultValue,
+  },
+  year: {
+    emoji: '🎆',
+    title: 'Year',
+    data: defaultValue,
+  },
+  decade: {
+    emoji: '🌠',
+    title: 'Decade',
+    data: defaultValue,
+  },
+  century: {
+    emoji: '🌌',
+    title: 'Century',
+    data: defaultValue,
+  },
+  millennium: {
+    emoji: '🏞',
+    title: 'Millennium',
+    data: defaultValue,
+  },
+  worldCancer: {
+    emoji: '👩‍⚕️',
+    title: 'World Cancer Day',
+    data: defaultValue,
+    dynamic: true,
+  },
+  valentine: {
+    emoji: '💑',
+    title: "Valentine's Day",
+    data: defaultValue,
+    dynamic: true,
+  },
+  intWomen: {
+    emoji: '🙋‍♀️',
+    title: "Int. Women's Day",
+    data: defaultValue,
+    dynamic: true,
+  },
+  aprilFool: {
+    emoji: '🤡',
+    title: "April Fools' Day",
+    data: defaultValue,
+    dynamic: true,
+  },
+  earth: {
+    emoji: '🌎',
+    title: 'Earth Day',
+    data: defaultValue,
+    dynamic: true,
+  },
+  labour: {
+    emoji: '👷‍♂️',
+    title: 'Labour Day',
+    data: defaultValue,
+    dynamic: true,
+  },
+  starWars: {
+    emoji: '✨',
+    title: 'Star Wars Day',
+    data: defaultValue,
+    dynamic: true,
+  },
+  mother: {
+    emoji: '👩🏻',
+    title: "Mother's Day",
+    data: defaultValue,
+    dynamic: true,
+  },
+  father: {
+    emoji: '👨🏻',
+    title: "Father's Day",
+    data: defaultValue,
+    dynamic: true,
+  },
+  independence: {
+    emoji: '🇺🇸',
+    title: 'Independence Day',
+    data: defaultValue,
+    dynamic: true,
+  },
+  olympic: {
+    emoji: '🇯🇵',
+    title: '2020 Summer Olympics',
+    data: defaultValue,
+    dynamic: true,
+  },
+  halloween: {
+    emoji: '👻',
+    title: 'Halloween',
+    data: defaultValue,
+    dynamic: true,
+  },
+  single: {
+    emoji: '🚶‍♂️',
+    title: "️Singles' Day",
+    data: defaultValue,
+    dynamic: true,
+  },
+  blackFriday: {
+    emoji: '🖤',
+    title: 'Black Friday',
+    data: defaultValue,
+    dynamic: true,
+  },
+  christmas: {
+    emoji: '🎅🏻',
+    title: 'Christmas',
+    data: defaultValue,
+    dynamic: true,
+  },
+  newYear: {
+    emoji: '🎉',
+    title: 'New Year',
+    data: defaultValue,
+    dynamic: true,
+  },
+  cake: {
+    emoji: '🎂',
+    title: 'My Cake Day',
+    data: defaultValue,
+  },
+};
+
+function reducer(state, action) {
+  switch (action.type) {
+    case 'update':
+      const obj = {};
+      Object.keys(initialState).forEach((key) => {
+        obj[key] = {
+          ...initialState[key],
+          data: action.payload[key],
+        };
+      });
+      return {
+        ...state,
+        ...obj,
+      };
+    default:
+      throw new Error();
+  }
+}
 
 const App = () => {
-  const [mco, setMCO] = useState(defaultValue);
-  const [millenniumData, setMillenniumData] = useState(defaultValue);
-  const [centuryData, setCenturyData] = useState(defaultValue);
-  const [decadeData, setDecadeData] = useState(defaultValue);
-  const [yearData, setYearData] = useState(defaultValue);
-  const [quarterData, setQuarterData] = useState(defaultValue);
-  const [monthData, setMonthData] = useState(defaultValue);
-  const [weekData, setWeekData] = useState(defaultValue);
-  const [todayData, setTodayData] = useState(defaultValue);
-  const [hourData, setHourData] = useState(defaultValue);
-  const [valentineData, setValentineData] = useState(defaultValue);
-  const [womenData, setWomenData] = useState(defaultValue);
-  const [singlesData, setSinglesData] = useState(defaultValue);
-  const [fathersDayData, setFathersDayData] = useState(defaultValue);
-  const [mothersDayData, setMothersDayData] = useState(defaultValue);
-  const [christmasData, setChristmasData] = useState(defaultValue);
-  const [olympicsData, setOlympicsData] = useState(defaultValue);
-  const [halloweenData, setHalloweenData] = useState(defaultValue);
-  const [blackFridayData, setBlackFridayData] = useState(defaultValue);
-  const [starWarsDayData, setStarWarsDayData] = useState(defaultValue);
-  const [aprilFoolData, setAprilFoolData] = useState(defaultValue);
-  const [labourDayData, setLabourDayData] = useState(defaultValue);
-  const [worldCancerDayData, setWorldCancerDayData] = useState(defaultValue);
-  const [earthDayData, setEarthDayData] = useState(defaultValue);
-  const [independenceDayData, setIndependenceDayData] = useState(defaultValue);
-  const [myBirthdayData, setMyBirthdayData] = useState(defaultValue);
+  const [state, dispatch] = useReducer(reducer, initialState);
   const [showDays, setShowDays] = useState(false);
   const [dots, setDots] = useState('');
 
   const updateProgress = useCallback((now) => {
     setDots('.'.repeat(now.getSeconds() % 4));
-    setMCO(calcFromTo('2020/3/18', now, '2021/1/1'));
-    setMillenniumData(calcLongYears(now, 1000));
-    setCenturyData(calcLongYears(now, 100));
-    setDecadeData(calcLongYears(now, 10));
-    setYearData(calcYear(now));
-    setQuarterData(calcQuarter(now));
-    setMonthData(calcMonth(now));
-    setWeekData(calcWeek(now));
-    setTodayData(calcToday(now));
-    setHourData(calcHour(now));
-    setValentineData(calcActualDate(now, 14, 2));
-    setWomenData(calcActualDate(now, 8, 3));
-    setSinglesData(calcActualDate(now, 11, 11));
-    setFathersDayData(calcMonthWeekDay(now, 6, 3, 7));
-    setMothersDayData(calcMonthWeekDay(now, 5, 2, 7));
-    setChristmasData(calcActualDate(now, 25, 12));
-    setOlympicsData(calcActualDate(now, 23, 7, 2021));
-    setHalloweenData(calcActualDate(now, 31, 10));
-    setBlackFridayData(calcLastSpecificDayOfMonth(now, 11, 5));
-    setStarWarsDayData(calcActualDate(now, 4, 5));
-    setAprilFoolData(calcActualDate(now, 1, 4));
-    setLabourDayData(calcActualDate(now, 1, 5));
-    setWorldCancerDayData(calcActualDate(now, 4, 2));
-    setEarthDayData(calcActualDate(now, 22, 4));
-    setIndependenceDayData(calcActualDate(now, 4, 7));
-    setMyBirthdayData(calcActualDate(now, 16, 6));
+
+    dispatch({
+      type: 'update',
+      payload: {
+        mco: calcFromTo('2020/3/18', now, '2021/1/1'),
+        hour: calcHour(now),
+        today: calcToday(now),
+        week: calcWeek(now),
+        month: calcMonth(now),
+        quarter: calcQuarter(now),
+        year: calcYear(now),
+        decade: calcLongYears(now, 10),
+        century: calcLongYears(now, 100),
+        millennium: calcLongYears(now, 1000),
+        worldCancer: calcActualDate(now, 4, 2),
+        valentine: calcActualDate(now, 14, 2),
+        intWomen: calcActualDate(now, 8, 3),
+        aprilFool: calcActualDate(now, 1, 4),
+        earth: calcActualDate(now, 22, 4),
+        labour: calcActualDate(now, 1, 5),
+        starWars: calcActualDate(now, 4, 5),
+        mother: calcMonthWeekDay(now, 5, 2, 7),
+        father: calcMonthWeekDay(now, 6, 3, 7),
+        independence: calcActualDate(now, 4, 7),
+        olympic: calcActualDate(now, 23, 7, 2021),
+        halloween: calcActualDate(now, 31, 10),
+        single: calcActualDate(now, 11, 11),
+        blackFriday: calcLastSpecificDayOfMonth(now, 11, 5),
+        christmas: calcActualDate(now, 25, 12),
+        newYear: calcYear(now),
+        cake: calcActualDate(now, 16, 6),
+      },
+    });
   }, []);
 
   useEffect(() => {
@@ -198,8 +247,8 @@ const App = () => {
   }, [updateProgress]);
 
   const toggleSwitch = useCallback(() => {
-    setShowDays(!showDays);
-  }, [showDays]);
+    setShowDays((x) => !x);
+  }, []);
 
   return (
     <div className={css.App}>
@@ -224,173 +273,99 @@ const App = () => {
           </div>
 
           <Progress
-            emoji="😷"
-            title="MCO"
-            data={mco}
-            showDiff={showDays}
-            // outbreak
-          />
-
-          <Progress
-            emoji="🕐"
-            title="Hour"
-            data={hourData}
-            showDiff={showDays}
-          />
-          <Progress
-            emoji="🌎"
-            title="Today"
-            data={todayData}
-            showDiff={showDays}
-          />
-          <Progress
-            emoji="👨‍💼"
-            title="Week"
-            data={weekData}
-            showDiff={showDays}
-          />
-          <Progress
-            emoji="📅"
-            title="Month"
-            data={monthData}
-            showDiff={showDays}
-          />
-          <Progress
-            emoji="🌘"
-            title="Quarter"
-            data={quarterData}
-            showDiff={showDays}
-          />
-          <Progress
-            emoji="🎆"
-            title="Year"
-            data={yearData}
-            showDiff={showDays}
-          />
-          <Progress
-            emoji="🌠"
-            title="Decade"
-            data={decadeData}
-            showDiff={showDays}
-          />
-          <Progress
-            emoji="🌌"
-            title="Century"
-            data={centuryData}
-            showDiff={showDays}
-          />
-          <Progress
-            emoji="🏞"
-            title="Millennium"
-            data={millenniumData}
+            emoji={state.mco.emoji}
+            title={state.mco.title}
+            data={state.mco.data}
             showDiff={showDays}
           />
 
-          <hr />
+          <Progress
+            emoji={state.hour.emoji}
+            title={state.hour.title}
+            data={state.hour.data}
+            showDiff={showDays}
+          />
 
           <Progress
-            emoji="👩‍⚕️"
-            title="World Cancer Day"
-            data={worldCancerDayData}
+            emoji={state.today.emoji}
+            title={state.today.title}
+            data={state.today.data}
             showDiff={showDays}
           />
+
           <Progress
-            emoji="💑"
-            title="Valentine's Day"
-            data={valentineData}
+            emoji={state.week.emoji}
+            title={state.week.title}
+            data={state.week.data}
             showDiff={showDays}
           />
+
           <Progress
-            emoji="🙋‍♀️"
-            title="Int. Women's Day"
-            data={womenData}
+            emoji={state.month.emoji}
+            title={state.month.title}
+            data={state.month.data}
             showDiff={showDays}
           />
+
           <Progress
-            emoji="🤡"
-            title="April Fools' Day"
-            data={aprilFoolData}
+            emoji={state.quarter.emoji}
+            title={state.quarter.title}
+            data={state.quarter.data}
             showDiff={showDays}
           />
+
           <Progress
-            emoji="🌎"
-            title="Earth Day"
-            data={earthDayData}
+            emoji={state.year.emoji}
+            title={state.year.title}
+            data={state.year.data}
             showDiff={showDays}
           />
+
           <Progress
-            emoji="👷‍♂️"
-            title="Labour Day"
-            data={labourDayData}
+            emoji={state.decade.emoji}
+            title={state.decade.title}
+            data={state.decade.data}
             showDiff={showDays}
           />
+
           <Progress
-            emoji="✨"
-            title="Star Wars Day"
-            data={starWarsDayData}
+            emoji={state.century.emoji}
+            title={state.century.title}
+            data={state.century.data}
             showDiff={showDays}
           />
+
           <Progress
-            emoji="👩🏻"
-            title="Mother's Day"
-            data={mothersDayData}
-            showDiff={showDays}
-          />
-          <Progress
-            emoji="👨🏻"
-            title="Father's Day"
-            data={fathersDayData}
-            showDiff={showDays}
-          />
-          <Progress
-            emoji="🇺🇸"
-            title="Independence Day"
-            data={independenceDayData}
-            showDiff={showDays}
-          />
-          <Progress
-            emoji="🇯🇵"
-            title="2020 Summer Olympics"
-            data={olympicsData}
-            showDiff={showDays}
-          />
-          <Progress
-            emoji="👻"
-            title="Halloween"
-            data={halloweenData}
-            showDiff={showDays}
-          />
-          <Progress
-            emoji="🚶‍♂️"
-            title="️Singles' Day"
-            data={singlesData}
-            showDiff={showDays}
-          />
-          <Progress
-            emoji="🖤"
-            title="Black Friday"
-            data={blackFridayData}
-            showDiff={showDays}
-          />
-          <Progress
-            emoji="🎅🏻"
-            title="Christmas"
-            data={christmasData}
-            showDiff={showDays}
-          />
-          <Progress
-            emoji="🎉"
-            title="New Year"
-            data={yearData}
+            emoji={state.millennium.emoji}
+            title={state.millennium.title}
+            data={state.millennium.data}
             showDiff={showDays}
           />
 
           <hr />
 
+          {Object.keys(state)
+            .sort((a, b) => state[a].data.days - state[b].data.days)
+            .map((key) => {
+              return (
+                state[key].dynamic && (
+                  <Progress
+                    key={key}
+                    emoji={state[key].emoji}
+                    title={state[key].title}
+                    data={state[key].data}
+                    showDiff={showDays}
+                  />
+                )
+              );
+            })}
+
+          <hr />
+
           <Progress
-            emoji="🎂"
-            title="My Cake Day"
-            data={myBirthdayData}
+            emoji={state.cake.emoji}
+            title={state.cake.title}
+            data={state.cake.data}
             showDiff={showDays}
           />
 

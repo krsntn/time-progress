@@ -168,6 +168,12 @@ const initialState = {
     data: defaultValue,
     dynamic: true,
   },
+  euro: {
+    emoji: '⚽',
+    title: 'UEFA EURO 2020',
+    data: defaultValue,
+    dynamic: true,
+  },
   cake: {
     emoji: '🎂',
     title: 'My Cake Day',
@@ -231,6 +237,7 @@ const App = () => {
         blackFriday: calcLastSpecificDayOfMonth(now, 11, 5),
         christmas: calcActualDate(now, 25, 12),
         newYear: calcYear(now),
+        euro: calcActualDate(now, 11, 7, 2021),
         cake: calcActualDate(now, 16, 6),
       },
     });

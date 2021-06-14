@@ -8,7 +8,7 @@ on:
 
 # Jobs to carry out
 jobs:
-  build & deploy:
+  deploy:
     runs-on: ubuntu-latest
     steps:
       # Get code from repo

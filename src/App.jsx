@@ -237,7 +237,7 @@ const App = () => {
         blackFriday: calcLastSpecificDayOfMonth(now, 11, 5),
         christmas: calcActualDate(now, 25, 12),
         newYear: calcYear(now),
-        euro: calcActualDate(now, 11, 7, 2021),
+        euro: calcActualDate(now, 11, 6, 2021),
         cake: calcActualDate(now, 16, 6),
       },
     });

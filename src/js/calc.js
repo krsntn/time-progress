@@ -107,7 +107,7 @@ export const calcLastSpecificDayOfMonth = (now, month, day) => {
     return date;
   }
 
-  if (now < thisYearDate) {
+  if (now < thisYearDate || now.toDateString() === thisYearDate.toDateString()) {
     return calcDayDiff(lastYearDate, now, thisYearDate);
   }
 
@@ -144,7 +144,7 @@ export const calcMonthWeekDay = (now, month, weekNo, day) => {
     );
   }
 
-  if (now < thisYearDate) {
+  if (now < thisYearDate || now.toDateString() === thisYearDate.toDateString()) {
     return calcDayDiff(lastYearDate, now, thisYearDate);
   }
 

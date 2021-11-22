@@ -22,11 +22,6 @@ import { Timer } from 'ez-timer';
 const defaultValue = { percentage: 0, days: 0 };
 
 const initialState = {
-  mco: {
-    emoji: '😷',
-    title: 'MCO',
-    data: defaultValue,
-  },
   hour: {
     emoji: '🕐',
     title: 'Hour',
@@ -132,12 +127,6 @@ const initialState = {
     data: defaultValue,
     dynamic: true,
   },
-  olympic: {
-    emoji: '🇯🇵',
-    title: '2020 Summer Olympics',
-    data: defaultValue,
-    dynamic: true,
-  },
   halloween: {
     emoji: '👻',
     title: 'Halloween',
@@ -205,7 +194,6 @@ const App = () => {
     dispatch({
       type: 'update',
       payload: {
-        mco: calcFromTo('2020/3/18', now, '2021/1/1'),
         hour: calcHour(now),
         today: calcToday(now),
         week: calcWeek(now),
@@ -225,7 +213,6 @@ const App = () => {
         mother: calcMonthWeekDay(now, 5, 2, 7),
         father: calcMonthWeekDay(now, 6, 3, 7),
         independence: calcActualDate(now, 4, 7),
-        olympic: calcActualDate(now, 23, 7, 2021),
         halloween: calcActualDate(now, 31, 10),
         single: calcActualDate(now, 11, 11),
         blackFriday: calcLastSpecificDayOfMonth(now, 11, 5),
@@ -271,13 +258,6 @@ const App = () => {
           <div className={css.bigDescription}>
             {new Date().toLocaleString()}
           </div>
-
-          <Progress
-            emoji={state.mco.emoji}
-            title={state.mco.title}
-            data={state.mco.data}
-            showDiff={showDays}
-          />
 
           <Progress
             emoji={state.hour.emoji}

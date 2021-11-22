@@ -12,7 +12,7 @@ import {
   calcActualDate,
   calcMonthWeekDay,
   calcLastSpecificDayOfMonth,
-  calcFromTo,
+  // calcFromTo,
 } from './js/calc';
 import Progress from './components/ProgressBar';
 import Switch from './components/Switch';

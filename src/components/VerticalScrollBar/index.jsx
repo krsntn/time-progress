@@ -1,16 +1,16 @@
 import React, { useEffect } from 'react';
-import css from './VerticalProgressBar.module.scss';
+import css from './VerticalScrollBar.module.scss';
 
-const VerticalProgressBar = props => {
+const VerticalScrollBar = props => {
   useEffect(() => {
-    window.addEventListener('scroll', updateVerticalProgressBar);
-    updateVerticalProgressBar();
+    window.addEventListener('scroll', updateVerticalScrollBar);
+    updateVerticalScrollBar();
     return () => {
-      window.removeEventListener('scroll', updateVerticalProgressBar);
+      window.removeEventListener('scroll', updateVerticalScrollBar);
     };
   }, []);
 
-  const updateVerticalProgressBar = () => {
+  const updateVerticalScrollBar = () => {
     const scrollPosition =
       document.body.scrollTop || document.documentElement.scrollTop;
     const totalHeight =
@@ -28,4 +28,4 @@ const VerticalProgressBar = props => {
   );
 };
 
-export default React.memo(VerticalProgressBar);
+export default React.memo(VerticalScrollBar);

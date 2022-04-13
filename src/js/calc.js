@@ -107,7 +107,10 @@ export const calcLastSpecificDayOfMonth = (now, month, day) => {
     return date;
   }
 
-  if (now < thisYearDate || now.toDateString() === thisYearDate.toDateString()) {
+  if (
+    now < thisYearDate ||
+    now.toDateString() === thisYearDate.toDateString()
+  ) {
     return calcDayDiff(lastYearDate, now, thisYearDate);
   }
 
@@ -136,7 +139,7 @@ export const calcMonthWeekDay = (now, month, weekNo, day) => {
 
   function getActualDate(year, month, weekNo, day) {
     const firstDateOfMonth = new Date(`${year}/${month}/1`);
-    const diff = day - firstDateOfMonth.getDay();
+    const diff = Math.abs(day - firstDateOfMonth.getDay());
     return new Date(
       firstDateOfMonth.setDate(
         firstDateOfMonth.getDate() + diff + (weekNo - 1) * 7
@@ -144,7 +147,10 @@ export const calcMonthWeekDay = (now, month, weekNo, day) => {
     );
   }
 
-  if (now < thisYearDate || now.toDateString() === thisYearDate.toDateString()) {
+  if (
+    now < thisYearDate ||
+    now.toDateString() === thisYearDate.toDateString()
+  ) {
     return calcDayDiff(lastYearDate, now, thisYearDate);
   }
 

@@ -37,7 +37,7 @@ export const calcMonth = (now) => {
   const lastDate = new Date(
     new Date().getFullYear(),
     new Date().getMonth() + 1,
-    1
+    1,
   );
 
   return calcDayDiff(firstDate, now, lastDate);
@@ -49,7 +49,7 @@ export const calcWeek = (now) => {
   const totalDays = new Date(
     firstDate.getFullYear(),
     firstDate.getMonth(),
-    0
+    0,
   ).getDate();
 
   if (addDays > totalDays) {
@@ -74,23 +74,24 @@ export const calcToday = (now) => {
 
   return {
     percentage: Math.floor((passedDay / totalDay) * 100),
-    days: `${remain} Hour${remain > 1 ? 's' : ''}`,
+    days: `${remain} Hour${remain > 1 ? "s" : ""}`,
   };
 };
 
 export const calcHour = (now) => {
   const start = new Date(now);
-  start.setHours(start.getHours(), 0, 0, 0);
   const end = new Date(now);
-  end.setHours(end.getHours() + 1, 0, 0, 0);
 
-  const passed = Math.abs(now - start);
-  const total = Math.abs(end - start);
-  const remain = Math.floor(Math.abs(end - now) / (1000 * 60) + 1);
+  start.setMinutes(0, 0, 0); // Set minutes, seconds, and milliseconds to 0
+  end.setHours(end.getHours() + 1, 0, 0, 0); // Set end time to start time + 1 hour
+
+  const passed = now - start.getTime();
+  const total = end.getTime() - start.getTime();
+  const remain = Math.floor((end - now) / (1000 * 60) + 1);
 
   return {
     percentage: Math.floor((passed / total) * 100),
-    days: `${remain} Minute${remain > 1 ? 's' : ''}`,
+    minutes: `${remain} Minute${remain !== 1 ? "s" : ""}`, // Use strict inequality for clarity
   };
 };
 
@@ -122,19 +123,19 @@ export const calcMonthWeekDay = (now, month, weekNo, day) => {
     new Date().getFullYear() - 1,
     month,
     weekNo,
-    day
+    day,
   );
   const thisYearDate = getActualDate(
     new Date().getFullYear(),
     month,
     weekNo,
-    day
+    day,
   );
   const nextYearDate = getActualDate(
     new Date().getFullYear() + 1,
     month,
     weekNo,
-    day
+    day,
   );
 
   function getActualDate(year, month, weekNo, day) {
@@ -142,8 +143,8 @@ export const calcMonthWeekDay = (now, month, weekNo, day) => {
     const diff = Math.abs(day - firstDateOfMonth.getDay());
     return new Date(
       firstDateOfMonth.setDate(
-        firstDateOfMonth.getDate() + diff + (weekNo - 1) * 7
-      )
+        firstDateOfMonth.getDate() + diff + (weekNo - 1) * 7,
+      ),
     );
   }
 

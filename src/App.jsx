@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useCallback, useReducer } from 'react';
-import { Helmet } from 'react-helmet';
-import css from './App.module.scss';
+import React, { useState, useEffect, useCallback, useReducer } from "react";
+import { Helmet } from "react-helmet";
+import css from "./App.module.scss";
 import {
   calcLongYears,
   calcYear,
@@ -13,160 +13,160 @@ import {
   calcMonthWeekDay,
   calcLastSpecificDayOfMonth,
   // calcFromTo,
-} from './js/calc';
-import Progress from './components/ProgressBar';
-import Switch from './components/Switch';
-import VerticalScrollBar from './components/VerticalScrollBar';
-import { Timer } from 'ez-timer';
+} from "./js/calc";
+import Progress from "./components/ProgressBar";
+import Switch from "./components/Switch";
+import VerticalScrollBar from "./components/VerticalScrollBar";
+import { Timer } from "ez-timer";
 
 const defaultValue = { percentage: 0, days: 0 };
 
 const initialState = {
   hour: {
-    emoji: '🕐',
-    title: 'Hour',
+    emoji: "🕐",
+    title: "Hour",
     data: defaultValue,
   },
   today: {
-    emoji: '🌎',
-    title: 'Today',
+    emoji: "🌎",
+    title: "Today",
     data: defaultValue,
   },
   week: {
-    emoji: '👨‍💼',
-    title: 'Week',
+    emoji: "👨‍💼",
+    title: "Week",
     data: defaultValue,
   },
   month: {
-    emoji: '📅',
-    title: 'Month',
+    emoji: "📅",
+    title: "Month",
     data: defaultValue,
   },
   quarter: {
-    emoji: '🌘',
-    title: 'Quarter',
+    emoji: "🌘",
+    title: "Quarter",
     data: defaultValue,
   },
   year: {
-    emoji: '🎆',
-    title: 'Year',
+    emoji: "🎆",
+    title: "Year",
     data: defaultValue,
   },
   decade: {
-    emoji: '🌠',
-    title: 'Decade',
+    emoji: "🌠",
+    title: "Decade",
     data: defaultValue,
   },
   century: {
-    emoji: '🌌',
-    title: 'Century',
+    emoji: "🌌",
+    title: "Century",
     data: defaultValue,
   },
   millennium: {
-    emoji: '🏞',
-    title: 'Millennium',
+    emoji: "🏞",
+    title: "Millennium",
     data: defaultValue,
   },
   worldCancer: {
-    emoji: '👩‍⚕️',
-    title: 'World Cancer Day',
+    emoji: "👩‍⚕️",
+    title: "World Cancer Day",
     data: defaultValue,
     dynamic: true,
   },
   valentine: {
-    emoji: '💑',
+    emoji: "💑",
     title: "Valentine's Day",
     data: defaultValue,
     dynamic: true,
   },
   intWomen: {
-    emoji: '🙋‍♀️',
+    emoji: "🙋‍♀️",
     title: "Int. Women's Day",
     data: defaultValue,
     dynamic: true,
   },
   aprilFool: {
-    emoji: '🤡',
+    emoji: "🤡",
     title: "April Fools' Day",
     data: defaultValue,
     dynamic: true,
   },
   earth: {
-    emoji: '🌎',
-    title: 'Earth Day',
+    emoji: "🌎",
+    title: "Earth Day",
     data: defaultValue,
     dynamic: true,
   },
   labour: {
-    emoji: '👷‍♂️',
-    title: 'Labour Day',
+    emoji: "👷‍♂️",
+    title: "Labour Day",
     data: defaultValue,
     dynamic: true,
   },
   starWars: {
-    emoji: '✨',
-    title: 'Star Wars Day',
+    emoji: "✨",
+    title: "Star Wars Day",
     data: defaultValue,
     dynamic: true,
   },
   mother: {
-    emoji: '👩🏻',
+    emoji: "👩🏻",
     title: "Mother's Day",
     data: defaultValue,
     dynamic: true,
   },
   father: {
-    emoji: '👨🏻',
+    emoji: "👨🏻",
     title: "Father's Day",
     data: defaultValue,
     dynamic: true,
   },
   independence: {
-    emoji: '🇺🇸',
-    title: 'Independence Day',
+    emoji: "🇺🇸",
+    title: "Independence Day",
     data: defaultValue,
     dynamic: true,
   },
   halloween: {
-    emoji: '👻',
-    title: 'Halloween',
+    emoji: "👻",
+    title: "Halloween",
     data: defaultValue,
     dynamic: true,
   },
   single: {
-    emoji: '🚶‍♂️',
+    emoji: "🚶‍♂️",
     title: "️Singles' Day",
     data: defaultValue,
     dynamic: true,
   },
   blackFriday: {
-    emoji: '🖤',
-    title: 'Black Friday',
+    emoji: "🖤",
+    title: "Black Friday",
     data: defaultValue,
     dynamic: true,
   },
   christmas: {
-    emoji: '🎅🏻',
-    title: 'Christmas',
+    emoji: "🎅🏻",
+    title: "Christmas",
     data: defaultValue,
     dynamic: true,
   },
   newYear: {
-    emoji: '🎉',
-    title: 'New Year',
+    emoji: "🎉",
+    title: "New Year",
     data: defaultValue,
     dynamic: true,
   },
   cake: {
-    emoji: '🎂',
-    title: 'My Cake Day',
+    emoji: "🎂",
+    title: "My Cake Day",
     data: defaultValue,
   },
 };
 
 function reducer(state, action) {
   switch (action.type) {
-    case 'update':
+    case "update":
       const obj = {};
       Object.keys(initialState).forEach((key) => {
         obj[key] = {
@@ -186,13 +186,13 @@ function reducer(state, action) {
 const App = () => {
   const [state, dispatch] = useReducer(reducer, initialState);
   const [showDays, setShowDays] = useState(false);
-  const [dots, setDots] = useState('');
+  const [dots, setDots] = useState("");
 
   const updateProgress = useCallback((now) => {
-    setDots('.'.repeat(now.getSeconds() % 4));
+    setDots(".".repeat(now.getSeconds() % 4));
 
     dispatch({
-      type: 'update',
+      type: "update",
       payload: {
         hour: calcHour(now),
         today: calcToday(now),
@@ -250,7 +250,7 @@ const App = () => {
             <div className={css.bigTitle}>
               <span role="img" aria-labelledby="emoji">
                 📈
-              </span>{' '}
+              </span>{" "}
               Progress
             </div>
             <Switch isChecked={showDays} toggleSwitch={toggleSwitch} />
@@ -354,7 +354,7 @@ const App = () => {
             <div>The only progress bar you'd rather see go slower.</div>
             <br />
             <div>
-              Build by <a href="http://dev.krsn.xyz">karson.</a>
+              Build by <a href="http://krsn.xyz">karson.</a>
             </div>
           </div>
         </div>

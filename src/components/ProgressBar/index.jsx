@@ -1,5 +1,5 @@
-import React, { useCallback } from 'react';
-import css from './Progress.module.scss';
+import React, { useCallback } from "react";
+import css from "./Progress.module.scss";
 
 const Progress = (props) => {
   const {
@@ -12,11 +12,11 @@ const Progress = (props) => {
 
   const displayDiff = useCallback(() => {
     if (showDiff) {
-      if (typeof days !== 'number') {
+      if (typeof days !== "number") {
         return `${days} Left`;
       }
 
-      const daySpan = `Day${days === -1 || days === 1 ? '' : 's'}`;
+      const daySpan = `Day${days === -1 || days === 1 ? "" : "s"}`;
       if (days === 0) {
         return `Today!`;
       } else if (days < 0) {
@@ -29,12 +29,12 @@ const Progress = (props) => {
   }, [showDiff, percentage, days]);
 
   return (
-    <div className={`${css.element} ${outbreak ? css.outbreak : ''}`}>
+    <div className={`${css.element} ${outbreak ? css.outbreak : ""}`}>
       <div className={css.title}>
         <div className={css.progressTitle}>
           <span role="img" aria-labelledby="emoji">
             {emoji}
-          </span>{' '}
+          </span>{" "}
           {title}
         </div>
         <div>{displayDiff()}</div>
